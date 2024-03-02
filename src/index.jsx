@@ -6,9 +6,8 @@ import {
 } from "react-router-dom";
 import Root from './routes/root';
 import ErrorPage from './error-page';
-import Artist from './routes/artist';
-import Album from './routes/album';
-import Track from './routes/track';
+import Hero from './routes/hero';
+import Play from './routes/play';
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -18,16 +17,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "artist",
-        element: <Artist />,
+        path: "/:gamemode",
+        element: <Hero />,
       },
       {
-        path: "album",
-        element: <Album />,
-      },
-      {
-        path: 'track',
-        element: <Track />,
+        path: "/:gamemode/:genre",
+        element: <Play />,
       },
     ],
   },

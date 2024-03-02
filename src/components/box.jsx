@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import {
     Card,
     CardContent,
@@ -7,14 +8,16 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 
-export default function Box() {
+export default function Box( {title} ) {
     return (
-        <Card className="aspect-square">
-            <CardHeader>
-                <CardTitle>Card Title</CardTitle>
-            </CardHeader>
-            <CardContent>
-            </CardContent>
-        </Card>
+        <Link to={title}>
+            <Card className="aspect-square">
+                <CardHeader>
+                    <CardTitle>{title || 'Untitled'}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                </CardContent>
+            </Card>
+        </Link>
     )
 }
