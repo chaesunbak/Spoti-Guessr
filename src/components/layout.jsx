@@ -5,9 +5,9 @@ import {
     ResizablePanelGroup,
   } from "@/components/ui/resizable"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import Menu from '../components/menu'
+import Menu from './menu'
 
-function Root() {
+function Layout() {
 
   return (
     <>
@@ -26,4 +26,4 @@ function Root() {
   )
 }
 
-export default Root
+export default Layout

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import Box from '../components/box';
 
-export default function Hero() {
+export default function GameMenu() {
 
     const params = useParams();
 

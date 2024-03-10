@@ -1,35 +1,34 @@
-import React from 'react'
-import * as ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Root from './routes/root';
-import ErrorPage from './error-page';
-import Hero from './routes/hero';
-import Play from './routes/play';
+import React from 'react';
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/layout';
+import Home from './pages/home';
+import GameMenu from './pages/gamemenu';
+import GamePlay from './pages/gameplay';
+import Profile from './pages/profile';
+import Settings from './pages/setting';
+
 import "./index.css";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/:gamemode",
-        element: <Hero />,
-      },
-      {
-        path: "/:gamemode/:genre",
-        element: <Play />,
-      },
-    ],
-  },
-]);
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+          <Route index element={<Home/>}/>
+          <Route path=':gamemode' element={<GameMenu/>}/>
+          <Route path=':gamemode/:genre' element={<GamePlay/>}/>
+          <Route path='profile' element={<Profile/>}/>
+          <Route path='settings' element={<Settings/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
+}
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </React.StrictMode>
 );

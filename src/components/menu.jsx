@@ -22,12 +22,12 @@ export default function Menu() {
                     <CommandGroup heading="Music">
                         <CommandItem><Link to="/artist">Artist</Link></CommandItem>
                         <CommandItem><Link to="/album">Album</Link></CommandItem>
-                        <CommandItem><Link to="track">Track</Link></CommandItem>
+                        <CommandItem><Link to="/track">Track</Link></CommandItem>
                         </CommandGroup>
                             <CommandSeparator />
                         <CommandGroup heading="Settings">
-                        <CommandItem>Profile</CommandItem>
-                        <CommandItem>Settings</CommandItem>
+                        <CommandItem><Link to="/profile">Profile</Link></CommandItem>
+                        <CommandItem><Link to="/settings">Settings</Link></CommandItem>
                     </CommandGroup>
                 </CommandList>
             </Command>

@@ -5,7 +5,7 @@ import { Button } from "../components/ui/button";
 import artistDB from "../DB/artist";
 
 
-export default function Play() {
+export default function GamePlay() {
     const [singers, setSingers] = useState([]);
     const [count, setCouunt] = useState();
     const [accessToken, setAcessToken] = useState();
