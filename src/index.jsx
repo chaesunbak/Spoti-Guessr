@@ -5,12 +5,14 @@ import Layout from './components/layout';
 import Home from './pages/home';
 import GameMenu from './pages/gamemenu';
 import GamePlay from './pages/gameplay';
-import Profile from './pages/profile';
+import Profile from './pages/Profile/profile';
 import Settings from './pages/setting';
-
 import "./index.css";
+import useAuthStore from './store/authStore';
 
 function App() {
+  const authUser = useAuthStore(state => state.user);
+
   return (
     <BrowserRouter>
       <Routes>

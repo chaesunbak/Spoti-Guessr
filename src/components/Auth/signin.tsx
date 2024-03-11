@@ -84,12 +84,12 @@ export default function SignIn() {
                                 </FormItem>
                             }}
                         />
-                        <Button type="submit">로그인</Button>
+                        <Button type="submit" className="w-full mt-4">로그인</Button>
                     </form>
                 </Form>
             </CardContent>
             <CardFooter>
-                <p>계정이 없으신가요?</p> <Link>가입하기</Link>
+                <p>계정이 없으신가요?</p> <Link className="text-blue-500">가입하기</Link>
             </CardFooter>
         </Card>
     )

@@ -5,7 +5,8 @@ import {
     ResizablePanelGroup,
   } from "@/components/ui/resizable"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import Menu from './menu'
+import SideBar from "./sidebar";
+
 
 function Layout() {
 
@@ -13,7 +14,7 @@ function Layout() {
     <>
       <ResizablePanelGroup direction="horizontal" className="size-full">
         <ResizablePanel defaultSize={20}>
-           <Menu />
+           <SideBar />
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel defaultSize={80}>
