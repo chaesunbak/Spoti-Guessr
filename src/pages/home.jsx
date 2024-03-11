@@ -1,5 +1,5 @@
-import SignIn from "../components/signin"
-import SignUp from "../components/signup"
+import SignIn from "../components/Auth/signin"
+import SignUp from "../components/Auth/signup"
 
 export default function Home() {
     return (
