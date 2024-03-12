@@ -1,14 +1,13 @@
-import { Link } from "react-router-dom"
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import useSignUpWithEmailAndPassword from "../../hooks/useSignUpWithEmailAndPassword";
-import GoogleAuth from "./googleauth.jsx"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
+import GoogleAuth from "./googleauth.jsx";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 const formSchema = z
       .object({
@@ -34,12 +33,11 @@ export default function SignUp() {
       });
 
     const handleSubmit = (inputs) => {
-
         signup(inputs);
     }
 
     return (
-        <Card className="flex flex-col justify-between max-w-lg">
+        <Card className="flex flex-col justify-between">
             <CardHeader>
                 <CardTitle>계정 만들기</CardTitle>
                 <CardDescription></CardDescription>
@@ -94,9 +92,6 @@ export default function SignUp() {
                     </form>
                 </Form>
             </CardContent>
-            <CardFooter>
-                <p>이미 계정이 있으신가요?</p> <Link>로그인하기</Link>
-            </CardFooter>
         </Card>
     )
 }

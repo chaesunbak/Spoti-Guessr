@@ -23,13 +23,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-
-const formSchema = z.object({
-    email: z.string().email({ message: "올바르지 않은 이메일입니다." }),
-    password: z.string().min(8, { message: "8자 이상 입력해주세요." }).max(50, { message: "50자를 초과할 수 없습니다." }),
-  })
+import useSignIn from '../../hooks/useSignIn';
 
 export default function SignIn() {
+    const { login , loggingin, error} = useSignIn();
+
+    const formSchema = z.object({
+        email: z.string().email({ message: "올바르지 않은 이메일입니다." }),
+        password: z.string().min(8, { message: "8자 이상 입력해주세요." }).max(50, { message: "50자를 초과할 수 없습니다." }),
+      })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -39,14 +41,12 @@ export default function SignIn() {
         },
       });
 
-    const handleSubmit = (form) => {
-        console.log(form);
-
-
+    const handleSubmit = (inputs) => {
+        login(inputs);
     }
 
     return (
-        <Card className="flex flex-col justify-between max-w-lg">
+        <Card className="flex flex-col justify-between">
             <CardHeader>
                 <CardTitle>로그인</CardTitle>
                 <CardDescription></CardDescription>
@@ -84,13 +84,10 @@ export default function SignIn() {
                                 </FormItem>
                             }}
                         />
-                        <Button type="submit" className="w-full mt-4">로그인</Button>
+                        <Button type="submit" className="w-full mt-4" disabled={loggingin}>로그인</Button>
                     </form>
                 </Form>
             </CardContent>
-            <CardFooter>
-                <p>계정이 없으신가요?</p> <Link className="text-blue-500">가입하기</Link>
-            </CardFooter>
         </Card>
     )
 }

@@ -7,11 +7,10 @@ import GameMenu from './pages/gamemenu';
 import GamePlay from './pages/gameplay';
 import Profile from './pages/Profile/profile';
 import Settings from './pages/setting';
+import Auth from './pages/Auth/auth';
 import "./index.css";
-import useAuthStore from './store/authStore';
 
 function App() {
-  const authUser = useAuthStore(state => state.user);
 
   return (
     <BrowserRouter>
@@ -22,6 +21,7 @@ function App() {
           <Route path=':gamemode/:genre' element={<GamePlay/>}/>
           <Route path='profile' element={<Profile/>}/>
           <Route path='settings' element={<Settings/>}/>
+          <Route path='auth' element={<Auth/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

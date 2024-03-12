@@ -5,7 +5,7 @@ import useShowToast from "./useShowToast";
 import useAuthStore from "../store/authStore";
 
 const useLogin = () => {
-	const [signInWithEmailAndPassword, , loading, error] = useSignInWithEmailAndPassword(auth);
+	const [signInWithEmailAndPassword, , loggingin, error] = useSignInWithEmailAndPassword(auth);
     const showToast = useShowToast();
 	const loginUser = useAuthStore((state) => state.login);
 
@@ -24,7 +24,7 @@ const useLogin = () => {
 		}
 	};
 
-	return { loading, error, login };
+	return { login, loggingin, error };
 };
 
 export default useLogin;

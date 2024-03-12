@@ -9,7 +9,7 @@ export default function GoogleAuth() {
 
     return (
         <Button variant="outline" onClick={handleContinueWithGoogle} disabled={loading}>
-            <FontAwesomeIcon icon={faGoogle} className="mr-2 h-4 w-4" />구글로 계속하기
+            <FontAwesomeIcon icon={faGoogle} className="mr-2 h-4 w-4" />구글계정으로 계속하기
         </Button>
     )
 }
