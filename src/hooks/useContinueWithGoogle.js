@@ -15,7 +15,7 @@ const useContinueWithGoogle = () => {
 		try {
 			const newUser = await signInWithGoogle();
 			if (!newUser && error) {
-				showToast("Error", error.message, "error");
+				showToast("Error", error.message);
 				return;
 			}
 			const userRef = doc(firestore, "users", newUser.user.uid);
@@ -33,13 +33,14 @@ const useContinueWithGoogle = () => {
 					email: newUser.user.email,
 					nickname:getRandomNickname(),
 					createdAt: Date.now(),
+					permission:"read-only",
 				};
 				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
 				localStorage.setItem("user-info", JSON.stringify(userDoc));
 				loginUser(userDoc);
 			}
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			showToast("Error", error.message);
 		}
 	};
 

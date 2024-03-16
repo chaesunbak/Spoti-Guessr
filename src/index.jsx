@@ -9,6 +9,7 @@ import Profile from './pages/Profile/profile';
 import Settings from './pages/setting';
 import Auth from './pages/Auth/auth';
 import "./index.css";
+import Admin from './pages/Admin/admin';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='profile' element={<Profile/>}/>
           <Route path='settings' element={<Settings/>}/>
           <Route path='auth' element={<Auth/>}/>
+          <Route path='admin' element={<Admin />}/>
         </Route>
       </Routes>
     </BrowserRouter>

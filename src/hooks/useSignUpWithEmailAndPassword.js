@@ -19,7 +19,7 @@ const useSignUpWithEmailAndPassword = (inputs) => {
         try {
             const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
             if (!newUser && error) {
-                showToast("Error", error.message, "error");
+                showToast("Error", error.message);
 				return;
             }
             if (newUser) {
@@ -28,13 +28,14 @@ const useSignUpWithEmailAndPassword = (inputs) => {
                     email:inputs.email,
                     nickname:getRandomNickname(),
                     createdAt:Date.now(),
+                    permission:"read-only",
                 }
                 await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
                 localStorage.setItem("user-info", JSON.stringify(userDoc));
                 loginUser(userDoc);
             }
         } catch (error) {
-            showToast("Error", error.message, "error");
+            showToast("Error", error.message);
         };
     }
     return { loading, error, signup};

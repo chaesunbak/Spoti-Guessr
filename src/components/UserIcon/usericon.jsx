@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -6,27 +7,24 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useAuthState } from 'react-firebase-hooks/auth';
 import useLogOut from "../../hooks/useLogOut";
-import { auth } from "../../firebase/firebase";
+import useAuthStore from "../../store/authStore";
 import { Link } from "react-router-dom";
 
 const UserIcon = () => {
-    const [user, loading, error] = useAuthState(auth);
-    const 
+    const user = useAuthStore((state) => state.user);
     const { handleLogOut } = useLogOut();
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage  />
+                    <AvatarFallback>{user ? user.nickname[0] : ""}</AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-                <DropdownMenuLabel></DropdownMenuLabel>
+                <DropdownMenuLabel>{user ? user.nickname : "로그인 안됨"}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                     <Link to="/profile">프로필</Link>
