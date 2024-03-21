@@ -1,5 +1,5 @@
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth, firestore } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import useShowToast from "./useShowToast";
 import useAuthStore from "../store/authStore";
@@ -14,7 +14,7 @@ const useLogin = () => {
 			const userCred = await signInWithEmailAndPassword(inputs.email, inputs.password);
 
 			if (userCred) {
-				const docRef = doc(firestore, "users", userCred.user.uid);
+				const docRef = doc(db, "users", userCred.user.uid);
 				const docSnap = await getDoc(docRef);
 				localStorage.setItem("user-info", JSON.stringify(docSnap.data()));
 				loginUser(docSnap.data());

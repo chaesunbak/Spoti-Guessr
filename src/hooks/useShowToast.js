@@ -1,9 +1,9 @@
 import { useToast } from "@/components/ui/use-toast"
 import { useCallback } from "react";
 
-
 const useShowToast = () => {
-	const toast = useToast();
+	const {toast} = useToast();
+	console.log(toast);
 
 	const showToast = useCallback(
 		( title, description ) => {
@@ -16,7 +16,6 @@ const useShowToast = () => {
 	);
 
 	return showToast;
-
 };
 
 export default useShowToast;

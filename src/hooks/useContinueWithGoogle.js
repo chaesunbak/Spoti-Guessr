@@ -1,5 +1,5 @@
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth'
-import { auth, firestore } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
 import useAuthStore from "../store/authStore";
 import useShowToast from "./useShowToast";
 import { doc, getDoc, setDoc } from 'firebase/firestore'
@@ -18,7 +18,7 @@ const useContinueWithGoogle = () => {
 				showToast("Error", error.message);
 				return;
 			}
-			const userRef = doc(firestore, "users", newUser.user.uid);
+			const userRef = doc(db, "users", newUser.user.uid);
 			const userSnap = await getDoc(userRef);
 
 			if (userSnap.exists()) {
@@ -35,7 +35,7 @@ const useContinueWithGoogle = () => {
 					createdAt: Date.now(),
 					permission:"read-only",
 				};
-				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
+				await setDoc(doc(db, "users", newUser.user.uid), userDoc);
 				localStorage.setItem("user-info", JSON.stringify(userDoc));
 				loginUser(userDoc);
 			}

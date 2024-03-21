@@ -17,16 +17,16 @@ export default function SideBar() {
     return (
         <>
             <Link to="/"><h1 className="font-sans text-xl font-bold">Spotify Guesser</h1></Link>
-            
+
             <Separator />
             <Command>
                 <CommandInput placeholder="Type a command or search..." />
                     <CommandList>
                         <CommandEmpty>No results found.</CommandEmpty>
                     <CommandGroup heading="Music">
-                        <CommandItem><Link to="/artist">Artist</Link></CommandItem>
-                        <CommandItem><Link to="/album">Album</Link></CommandItem>
-                        <CommandItem><Link to="/track">Track</Link></CommandItem>
+                        <CommandItem><Link to="/artists">Artists</Link></CommandItem>
+                        <CommandItem><Link to="/albums">Albums</Link></CommandItem>
+                        <CommandItem><Link to="/tracks">Tracks</Link></CommandItem>
                         </CommandGroup>
                             <CommandSeparator />
                         <CommandGroup heading="Settings">

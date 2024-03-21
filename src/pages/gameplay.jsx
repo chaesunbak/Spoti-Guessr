@@ -1,59 +1,66 @@
-import React, { useState } from "react";
+import { collection, query, where, getDocs, orderBy, limit, QuerySnapshot } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import PlayCard from "../components/playcard";
 import { Button } from "../components/ui/button";
-import artistDB from "../DB/artist";
-
+import { db } from '../firebase/firebase';
+import getRandomNumber from "../utils/getRandomNumber";
+import { useState } from "react";
 
 export default function GamePlay() {
-    const [singers, setSingers] = useState([]);
-    const [count, setCouunt] = useState();
-    const [accessToken, setAcessToken] = useState();
-
+    const [gameData1, setGameData1] = useState('');
+    const [gameData2, setGameData2] = useState('');
     const params = useParams();
+    const collectionRef = params.gamemode; /* artsits, albums, tracks 중 1 */
 
-    function startGame() {
-        getAccessToken();
-        console.log(accessToken);
+    async function getRandomData() {
+        const randomNum = getRandomNumber(0, 9999);
+        let found = false;
+        let attempt = 0;
+
+        while (!found) {
+            try {
+                let querySnapshot;
+                if (attempt % 2 === 0) {
+                    const q1 = query(collection(db, collectionRef), where("randomNum1", "<=", randomNum), orderBy("randomNum1", 'desc'), limit(1));
+                    querySnapshot = await getDocs(q1);
+                } else {
+                    const q2 = query(collection(db, collectionRef), where("random1", ">=", randomNum), orderBy("random1", 'asc'), limit(1));
+                    querySnapshot = await getDocs(q2);
+                }
+
+                if (!querySnapshot.empty) {
+                    found = true;
+                    let dataObj;
+                    querySnapshot.forEach((doc) => {
+                        dataObj = doc.data();
+                        console.log(dataObj);
+                    });
+                    return dataObj;
+                }
+                attempt++;
+            } catch (error) {
+                console.error("쿼리 중 오류 발생:", error);
+                break;
+            }
+        }
     }
 
-    async function getAccessToken() {
-        const clientId = "5bf5107c9e164f5db3c819720a4a68a0";
-        const clientSecret = "b7040453246844b9b7c35ca3690dc417";
+    async function getTwoRandomData() {
+        const dataObj1 = await getRandomData();
+        setGameData1(dataObj1);
 
-        const requestBody = new URLSearchParams();
-        requestBody.append("grant_type", "client_credentials");
-        requestBody.append("client_id", clientId);
-        requestBody.append("client_secret", clientSecret);
+        const dataObj2 = await getRandomData();
+        setGameData2(dataObj2);
+    }
 
-        try {
-          const response = await fetch("https://accounts.spotify.com/api/token", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: requestBody
-          });
-
-          if (!response.ok) {
-            throw new Error("Failed to get access token");
-          }
-
-          const responseData = await response.json();
-          setAcessToken(responseData.access_token);
-        } catch (error) {
-          console.error("Error fetching access token:", error);
-          return null;
-        }
-      }
 
     return (
         <section id={params.gamemode} className="h-screen">
             <h2 className="text-xl">{params.gamemode} : {params.genre}</h2>
-            <Button onClick={startGame}>시작하기</Button>
-            <div className="grid grid-cols-2">
-                <PlayCard />
-                <PlayCard />
+            <Button onClick={getTwoRandomData}>시작하기</Button>
+            <div className="grid grid-cols-2 gap-4 mx-auto">
+                <PlayCard gameData={gameData1} />
+                <PlayCard gameData={gameData2} />
             </div>
         </section>
     );
