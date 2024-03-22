@@ -18,7 +18,7 @@ function Layout() {
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel defaultSize={80}>
-          <ScrollArea className="h-full w-full rounded-md border p-4 @container">
+          <ScrollArea className="h-full w-full p-4">
             <Outlet />
           </ScrollArea>
         </ResizablePanel>

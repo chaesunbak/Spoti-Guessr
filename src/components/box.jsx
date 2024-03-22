@@ -1,19 +1,12 @@
 import { Link } from "react-router-dom"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-  } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
-export default function Box( {title} ) {
+export default function Box( {link, title, bgColor} ) {
     return (
-        <Link to={title}>
-            <Card className="aspect-square">
+        <Link to={link}>
+            <Card className={`aspect-square shadow hover:shadow-lg ${bgColor}`} >
                 <CardHeader>
-                    <CardTitle>{title || 'Untitled'}</CardTitle>
+                    <CardTitle className="text-white">{title || 'Untitled'}</CardTitle>
                 </CardHeader>
                 <CardContent>
                 </CardContent>

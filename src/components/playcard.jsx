@@ -17,9 +17,12 @@ export default function PlayCard({gameData}) {
     return (
         <Card className="aspect-square rounded-3xl" style={bgStyle} >
             <CardHeader>
-                <CardTitle className="text-7xl text-white">{gameData.name}</CardTitle>
+                <CardTitle className="text-white antialiased md:subpixel-antialiased">
+                    <div className="text-xl md:text-4xl lg:text-7xl bg-black bg-opacity-20 size-fit p-1 rounded-t-sm rounded-br-sm" >{gameData.name}</div>
+                    {(gameData.artist || gameData.date) && (<div className="text-md bg-black bg-opacity-20 size-fit p-1 rounded-b-sm">{gameData.artist} {gameData.date}</div>)}
+                </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="text-white">
             </CardContent>
         </Card>
     )

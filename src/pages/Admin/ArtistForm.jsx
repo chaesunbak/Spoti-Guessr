@@ -128,6 +128,7 @@ export default function MusicAdminFrom() {
             randomNum1: getRandomNumber(0,9999),
             randomNum2: getRandomNumber(0,9999),
             randomNum3: getRandomNumber(0,9999),
+            preview_url: track.preview_url,
           };
           try {
             setDoc(doc(db, "tracks", track.id), docData);

@@ -6,13 +6,20 @@ import { db } from '../firebase/firebase';
 import getRandomNumber from "../utils/getRandomNumber";
 import { useState } from "react";
 
+
+
 export default function GamePlay() {
     const [gameData1, setGameData1] = useState('');
     const [gameData2, setGameData2] = useState('');
     const params = useParams();
-    const collectionRef = params.gamemode; /* artsits, albums, tracks 중 1 */
 
-    async function getRandomData() {
+     
+    const genre = params.genre;
+
+    // const q = query(citiesRef, where("genre", "array-contains", genre));
+
+    async function getRandomDataFromAll() {
+        const collectionRef = params.gamemode; /* artsits, albums, tracks 중 1 */
         const randomNum = getRandomNumber(0, 9999);
         let found = false;
         let attempt = 0;
@@ -24,10 +31,10 @@ export default function GamePlay() {
                     const q1 = query(collection(db, collectionRef), where("randomNum1", "<=", randomNum), orderBy("randomNum1", 'desc'), limit(1));
                     querySnapshot = await getDocs(q1);
                 } else {
-                    const q2 = query(collection(db, collectionRef), where("random1", ">=", randomNum), orderBy("random1", 'asc'), limit(1));
+                    const q2 = query(collection(db, collectionRef), where("randomNum1", ">=", randomNum), orderBy("randomNum1", 'asc'), limit(1));
                     querySnapshot = await getDocs(q2);
                 }
-
+    
                 if (!querySnapshot.empty) {
                     found = true;
                     let dataObj;
@@ -46,10 +53,10 @@ export default function GamePlay() {
     }
 
     async function getTwoRandomData() {
-        const dataObj1 = await getRandomData();
+        const dataObj1 = await getRandomDataFromAll();
         setGameData1(dataObj1);
 
-        const dataObj2 = await getRandomData();
+        const dataObj2 = await getRandomDataFromAll();
         setGameData2(dataObj2);
     }
 
