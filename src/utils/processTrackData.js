@@ -1,10 +1,12 @@
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import getRandomNumber from "./getRandomNumber";
+import setDelay from "./setDelay";
 
 const processTrackData = async (ids, token) => {
     for (const id of ids) {
         try {
+            await setDelay(2000);
             const response1 = await fetch(
                 `https://api.spotify.com/v1/tracks/${id}`,
                 {
@@ -16,6 +18,8 @@ const processTrackData = async (ids, token) => {
             );
 
             const track = await response1.json();
+
+            await setDelay(2000);
 
             const artistid = track.artists[0].id;
 
@@ -39,7 +43,9 @@ const processTrackData = async (ids, token) => {
                 release_date: track.album.release_date,
                 popularity: track.popularity,
                 updatedAt: Date.now(),
-                randomNum: getRandomNumber(0,9999),
+                randomNum1: getRandomNumber(0,9999),
+                randomNum2: getRandomNumber(0,9999),
+                randomNum3: getRandomNumber(0,9999),
                 preview_url: track.preview_url,
             };
 

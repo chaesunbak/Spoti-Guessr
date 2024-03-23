@@ -1,23 +1,20 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label"
 import { Toaster } from "@/components/ui/toaster";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import useShowToast from "../../hooks/useShowToast";
-import processArtistData from "../../utils/processArtistData";
-import processAlbumData from "../../utils/processAlbumData";
-import processTrackData from "../../utils/processTrackData";
+import updateCollection from "../../utils/updateCollection";
 
-export default function MusicAdminFrom() {
+export default function UpdateDataForm() {
+
   const [token, setToken] = useState('');
   const [ids, setIds] = useState(['']);
   const [mode, setMode] = useState('artists'); /* 'artists', 'albums', 'track' 중 1 */
   const [isGettingToken, setIsGettingToken] = useState(false);
   const showToast = useShowToast();
 
-  const modeWithoutS = mode.slice(0, -1);
 
   const clientID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
   const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
@@ -42,38 +39,6 @@ export default function MusicAdminFrom() {
       setIsGettingToken(false);
     }
   };
-
-  const getIdFromSpotifyLink = (url) => {
-    const id = url.replace(`https://open.spotify.com/${modeWithoutS}/`, "").split("?")[0];
-    return id;
-  };
-
-  const inputItems = ids.map((id, index) => (
-    <Input
-      key={index}
-      placeholder={`${mode} ID ${index + 1}`}
-      value={id}
-      onChange={(e) => {
-        const newIds = [...ids];
-        newIds[index] = getIdFromSpotifyLink(e.target.value);
-        setIds(newIds);
-      }}
-    />
-  ));
-
-  function getDataAndUpload(ids, token) {
-    switch (mode) {
-      case "artists":
-        processArtistData(ids, token);
-        break;
-      case "albums":
-        processAlbumData(ids, token)
-        break;
-      case "tracks":
-        processTrackData(ids, token);
-        break;
-    }
-  }
 
   return (
     <>
@@ -115,19 +80,13 @@ export default function MusicAdminFrom() {
         </Card>
         <Card className="flex flex-col w-[400px]">
         <CardHeader>
-            <CardTitle>3. 데이터 받아와서 업로드하기</CardTitle>
-            <CardDescription>{mode} ID를 입력해주세요(공유-{mode} 링크복사)</CardDescription>
+            <CardTitle>3. 데이터 업데이트 하기하기</CardTitle>
+            <CardDescription>{mode}콜렉션의 모든 문서를 업데이트합니다.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-1">
-            {inputItems}
-            <div className="mx-auto">
-            <Button onClick={() => setIds(ids.slice(0, -1))}>-</Button>
-            <Button onClick={() => setIds([...ids, ''])}>+</Button>
-            </div>
         </CardContent>
         <CardFooter>
-            <Button onClick={()=>getDataAndUpload(ids, token)} className='w-full'>데이터 업로드하기</Button>
-            <Button onClick={()=>setIds([''])}>아이디 초기화하기</Button>
+            <Button onClick={()=>updateCollection(mode, token)} className='w-full'>데이터 업로드하기</Button>
         </CardFooter>
         </Card>
         <Toaster />

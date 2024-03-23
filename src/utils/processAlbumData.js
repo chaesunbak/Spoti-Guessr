@@ -1,10 +1,13 @@
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import getRandomNumber from "./getRandomNumber";
+import setDelay from "./setDelay";
 
 const processAlbumData = async (ids, token) => {
     for (const id of ids) {
         try {
+            await setDelay(2000);
+
             const response1 = await fetch(
                 `https://api.spotify.com/v1/albums/${id}`,
                 {
@@ -16,6 +19,8 @@ const processAlbumData = async (ids, token) => {
             );
 
             const data1 = await response1.json();
+
+            await setDelay(2000);
 
             const artistid = data1.artists[0].id;
 
@@ -38,8 +43,10 @@ const processAlbumData = async (ids, token) => {
                 genres: data2.genres,
                 popularity: data1.popularity,
                 updatedAt: Date.now(),
-                randomNum: getRandomNumber(0,9999),
-                preview_url: data1.tracks.items[0]?.preview_url,
+                randomNum1: getRandomNumber(0,9999),
+                randomNum2: getRandomNumber(0,9999),
+                randomNum3: getRandomNumber(0,9999),
+                preview_url: data1.tracks.items[1]?.preview_url, /* 앨범의 두번째 트랙의 프리뷰를 가져옵니다. */
             };
 
             await setDoc(doc(db, "albums", data1.id), docData);
