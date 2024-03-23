@@ -5,11 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label"
 import { Toaster } from "@/components/ui/toaster";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { doc, setDoc } from "firebase/firestore";
-import { db } from '../../firebase/firebase';
-import getRandomNumber from "../../utils/getRandomNumber";
 import useShowToast from "../../hooks/useShowToast";
-
+import processArtistData from "../../utils/processArtistData";
+import processAlbumData from "../../utils/processAlbumData";
+import processTrackData from "../../utils/processTrackData";
 
 export default function MusicAdminFrom() {
   const [token, setToken] = useState('');
@@ -17,7 +16,6 @@ export default function MusicAdminFrom() {
   const [mode, setMode] = useState('artists'); /* 'artists', 'albums', 'track' 중 1 */
   const [isGettingToken, setIsGettingToken] = useState(false);
   const showToast = useShowToast();
-  const [isUploadingData, setIsUploadingData] = useState(false);
 
   const modeWithoutS = mode.slice(0, -1);
 
@@ -63,87 +61,19 @@ export default function MusicAdminFrom() {
     />
   ));
 
-  async function getDataAndUpload() {
-    const dataIds = ids.join(',');
-
-    try {
-      setIsUploadingData(true);
-      const response = await fetch(
-        `https://api.spotify.com/v1/${mode}?ids=${dataIds}`,
-        {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      const data = await response.json();
-      showToast('데이터를 받아오는데 성공했습니다!');
-
-      if (mode == 'artists') {
-        for (const artist of data.artists) {
-          const docData = {
-            name: artist.name,
-            followers: artist.followers.total,
-            image: artist.images[0]?.url,
-            genres: artist.genres,
-            popularity: artist.popularity,
-            updatedAt: Date.now(),
-            randomNum1: getRandomNumber(0,9999),
-            randomNum2: getRandomNumber(0,9999),
-            randomNum3: getRandomNumber(0,9999),
-          };
-          try {
-            setDoc(doc(db, "artists", artist.id), docData);
-          } catch (error) {
-            showToast(error, error.message);
-          }
-        };
-      } else if ( mode == 'albums') {
-        for (const album of data.albums) {
-          const docData = {
-            name: album.name,
-            image: album.images[0]?.url,
-            artist: album.artist[0].name,
-            genres: album.genres,
-            popularity: album.popularity,
-            updatedAt: Date.now(),
-            randomNum1: getRandomNumber(0,9999),
-            randomNum2: getRandomNumber(0,9999),
-            randomNum3: getRandomNumber(0,9999),
-          };
-          try {
-            setDoc(doc(db, "albums", album.id), docData);
-          } catch (error) {
-            showToast(error, error.message);
-          }
-        };
-      } else if ( mode == 'tracks') {
-        for (const track of data.tracks) {
-          const docData = {
-            name: track.name,
-            image: track.album.images[0]?.url,
-            artist: track.album.artist[0].name,
-            popularity: track.popularity,
-            updatedAt: Date.now(),
-            randomNum1: getRandomNumber(0,9999),
-            randomNum2: getRandomNumber(0,9999),
-            randomNum3: getRandomNumber(0,9999),
-            preview_url: track.preview_url,
-          };
-          try {
-            setDoc(doc(db, "tracks", track.id), docData);
-          } catch (error) {
-            showToast(error, error.message);
-          }
-        };
-      };
-      showToast('모든 데이터가 성공적으로 업로드되었습니다.')
-    } catch (error) {
-      showToast(error, error.message);
-    } finally {
-      setIsUploadingData(false);
+  function getDataAndUpload(ids, token) {
+    switch (mode) {
+      case "artists":
+        processArtistData(ids, token);
+        break;
+      case "albums":
+        processAlbumData(ids, token)
+        break;
+      case "tracks":
+        processTrackData(ids, token);
+        break;
     }
-  };
+  }
 
   return (
     <>
@@ -196,7 +126,7 @@ export default function MusicAdminFrom() {
             </div>
         </CardContent>
         <CardFooter>
-            <Button onClick={getDataAndUpload} disabled={isUploadingData} className='w-full'>데이터 업로드하기</Button>
+            <Button onClick={()=>getDataAndUpload(ids, token)} className='w-full'>데이터 업로드하기</Button>
             <Button onClick={()=>setIds([''])}>아이디 초기화하기</Button>
         </CardFooter>
         </Card>
