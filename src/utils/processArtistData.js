@@ -8,7 +8,7 @@ const processArtistData = async (ids, token) => {
         try {
             await setDelay(2000);
 
-            const response1 = await fetch(
+            const artistResponse = await fetch(
                 `https://api.spotify.com/v1/artists/${id}`,
                 {
                     method: "GET",
@@ -18,11 +18,11 @@ const processArtistData = async (ids, token) => {
                 }
             );
 
-            const data1 = await response1.json();
+            const artist = await artistResponse.json();
 
             await setDelay(2000);
 
-            const response2 = await fetch(
+            const top_tracksResponse = await fetch(
                 `https://api.spotify.com/v1/artists/${id}/top-tracks`,
                 {
                     method: "GET",
@@ -32,22 +32,22 @@ const processArtistData = async (ids, token) => {
                 }
             );
 
-            const data2 = await response2.json();
+            const top_track = await top_tracksResponse.json();
 
             const docData = {
-                name: data1.name,
-                followers: data1.followers.total,
-                image: data1.images[0]?.url,
-                genres: data1.genres,
-                popularity: data1.popularity,
+                name: artist.name,
+                followers: artist.followers.total, /*아직 사용되지 않으나 혹시 몰라서 추가 */
+                image: artist.images[0]?.url,
+                genres: artist.genres,
+                popularity: artist.popularity,
                 updatedAt: Date.now(),
                 randomNum1: getRandomNumber(0,9999),
                 randomNum2: getRandomNumber(0,9999),
                 randomNum3: getRandomNumber(0,9999),
-                preview_url: data2.tracks[0]?.preview_url,
+                preview_url: top_track.tracks[0]?.preview_url,
             };
 
-            await setDoc(doc(db, "artists", data1.id), docData);
+            await setDoc(doc(db, "artists", artist.id), docData);
             console.log(`${data1.name} 업로드 성공`);
 
         } catch (error) {
