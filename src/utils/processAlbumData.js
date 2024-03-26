@@ -22,7 +22,7 @@ const processAlbumData = async (ids, token) => {
 
             await setDelay(2000);
 
-            const artistid = data1.artists[0].id;
+            const artistid = album.artists[0].id;
 
             const artistResponse = await fetch(
                 `https://api.spotify.com/v1/artists/${artistid}`,
@@ -39,9 +39,9 @@ const processAlbumData = async (ids, token) => {
             const docData = {
                 name: album.name,
                 image: album.images[0]?.url,
-                artist_name1: album.artist[0]?.name,
-                artist_name2: album.artist[1]?.name,
-                artist_name3: album.artist[2]?.name, /* 앨범의 아티스트 이름은 세번째 아티스트까지만 가져옴 */
+                artist_name1: album.artists[0]?.name || null,
+                artist_name2: album.artists[1]?.name || null,
+                artist_name3: album.artists[2]?.name || null, /* 앨범의 아티스트 이름은 세번째 아티스트까지만 가져옴 */
                 release_date: album.release_date,
                 genres: artist.genres, /* 앨범의 장르는 null인 경우가 많음, 앨범의 첫번째 아티스트의 장르를 가져옴*/
                 popularity: album.popularity,
@@ -53,7 +53,7 @@ const processAlbumData = async (ids, token) => {
             };
 
             await setDoc(doc(db, "albums", album.id), docData);
-            console.log(`${data1.name} 업로드 성공`);
+            console.log(`${album.name} 업로드 성공`);
 
         } catch (error) {
             console.error(error);

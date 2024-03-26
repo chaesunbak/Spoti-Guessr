@@ -12,7 +12,7 @@ export default function GameMenu() {
                 < Box title="모두" link="all" bgColor="bg-indigo-500"/>
                 < Box title="팝" link="pop" bgColor="bg-pink-500"/>
                 < Box title='케이팝' link="k-pop" bgColor="bg-fuchsia-500" />
-                < Box title="케이팝 걸 그룹" link='k-pop gril group' bgColor="bg-purple-500"/>
+                < Box title="케이팝 걸 그룹" link='k-pop girl group' bgColor="bg-purple-500"/>
                 < Box title="케이팝 보이 그룹" link="k-pop boy group" bgColor="bg-blue-500"/>
                 < Box title="클래식 한국 팝" link="classic k-pop" bgColor="bg-sky-500"/>
                 < Box title="힙합" link="hip-hop" bgColor="bg-rose-500"/>

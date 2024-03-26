@@ -48,7 +48,7 @@ const processArtistData = async (ids, token) => {
             };
 
             await setDoc(doc(db, "artists", artist.id), docData);
-            console.log(`${data1.name} 업로드 성공`);
+            console.log(`${artist.name} 업로드 성공`);
 
         } catch (error) {
             console.error(error);

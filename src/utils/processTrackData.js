@@ -39,9 +39,9 @@ const processTrackData = async (ids, token) => {
                 name: track.name,
                 image: track.album.images[0]?.url,
                 genres: artist.genres, /* 트랙의 장르는 null인 경우가 많아 첫번째 아티스트의 장르를 가져옴 */
-                artist_name1: track.artists[0]?.name,
-                artist_name2: track.artists[1]?.name,
-                artist_name3: track.artists[2]?.name,
+                artist_name1: track.artists[0]?.name || null,
+                artist_name2: track.artists[1]?.name || null,
+                artist_name3: track.artists[2]?.name || null,
                 album_name: track.album.name,
                 release_date: track.album.release_date,
                 popularity: track.popularity,
