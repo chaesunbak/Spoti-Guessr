@@ -1,13 +1,37 @@
 import { useParams } from 'react-router-dom';
-import Box from '../components/box';
+import { Navigate } from 'react-router';
+import Box from '../../components/box';
 
 export default function GameMenu() {
 
     const params = useParams();
 
+    const gamemode = params.gamemode;
+
+    const getGameModeTitle = (mode) => {
+        switch (mode) {
+            case 'artists':
+                return '아티스트';
+            case 'albums':
+                return '앨범';
+            case 'tracks':
+                return '트랙';
+            default:
+                return null;
+        }
+    };
+
+    const title = getGameModeTitle(gamemode);
+
+    if (!title) {
+        return <Navigate to="/" replace />;
+    }
+
     return (
         <section id={params.gamemode} className='@container'>
-            <h2 className='font-bold text-5xl lg:text-6xl my-2'>{params.gamemode}</h2>
+            <h2 className='font-bold text-neutral-700 text-3xl @md:text-5xl @lg:text-6xl mb-2'>
+                게임모드 : {title}
+            </h2>
             <div className='size-full grid gap-4 grid-cols-2 @md:grid-cols-3 @xl:grid-cols-4 @3xl:grid-cols-5 @5xl:grid-cols-6'>
                 < Box title="모두" link="all" bgColor="bg-indigo-500"/>
                 < Box title="팝" link="pop" bgColor="bg-pink-500"/>
