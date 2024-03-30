@@ -5,7 +5,6 @@ import Box from '../../components/box';
 export default function GameMenu() {
 
     const params = useParams();
-
     const gamemode = params.gamemode;
 
     const getGameModeTitle = (mode) => {
@@ -45,6 +44,7 @@ export default function GameMenu() {
                 < Box title="클래식 록" link="classic rock" bgColor="bg-lime-500"/>
                 < Box title="한국 인디" link="k-indie" bgColor="bg-cyan-500"/>
                 < Box title="트로트" link="trot" bgColor="bg-teal-500"/>
+
             </div>
         </section>
     )

@@ -12,7 +12,21 @@ export default function GamePlay() {
     const [gameLog, setGameLog] = useState([]);
     const params = useParams();
 
+    const gamemode = params.gamemode;
     const genre = params.genre; /* all, pop, k-pop 등등 */
+
+    const getGameModeTitle = (mode) => {
+        switch (mode) {
+            case 'artists':
+                return '아티스트';
+            case 'albums':
+                return '앨범';
+            case 'tracks':
+                return '트랙';
+            default:
+                return null;
+        }
+    };
 
     async function getRandomDataFromAll() {
         const collectionRef = params.gamemode; /* artsits, albums, tracks 중 1 */
@@ -123,17 +137,17 @@ export default function GamePlay() {
     }
 
     return (
-        <section id={params.gamemode} className="h-screen @container">
+        <section id={params.gamemode} className="@container">
             <div className="flex">
                 <h2 className='font-bold text-neutral-700 text-xl @md:text-2xl @lg:text-5xl mb-2'>
-                    스포티파이에서<br />어느 앨범이 더 인기있을까요? ({genre}) 
+                    스포티파이에서<br />어느 {getGameModeTitle(gamemode)} 더 인기있을까요? ({genre}) 
                 </h2>
                 <div>
                     라운드 : {round}
                     로그: {gameLog.join(' ')}
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-8 mx-auto">
+            <div className="flex gap-2 md:gap-4 lg:gap-6 xl:gap-8 mx-auto">
                 {gameData.map((data, index) => (
                     <PlayCard key={index} gameData={data} onClick={() => checkAnswer(index)} />
                 ))}

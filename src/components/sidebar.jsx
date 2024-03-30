@@ -12,7 +12,7 @@ export default function SideBar() {
             <Command>
                 <CommandInput placeholder="검색어를 입력해주세요" />
                     <CommandList>
-                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
                     <CommandGroup heading="게임모드" className="text-sm">
                         <CommandItem className="text-md"><Link to="/artists">아티스트</Link></CommandItem>
                         <CommandItem className="text-md"> <Link to="/albums">앨범</Link></CommandItem>

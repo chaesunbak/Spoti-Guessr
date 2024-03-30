@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 export default function Box( {link, title, bgColor} ) {
     return (
         <Link to={link}>
-            <Card className={`aspect-square shadow hover:shadow-lg ${bgColor}`} >
+            <Card className={`aspect-square drop-shadow-md hover:drop-shadow-lg ${bgColor}`} >
                 <CardHeader>
                     <CardTitle className="text-white">{title || 'Untitled'}</CardTitle>
                 </CardHeader>
