@@ -3,7 +3,6 @@ import { useCallback } from "react";
 
 const useShowToast = () => {
 	const {toast} = useToast();
-	console.log(toast);
 
 	const showToast = useCallback(
 		( title, description ) => {

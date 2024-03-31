@@ -3,6 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components/ui/resizable"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import SideBar from "./sidebar";
+import { Toaster } from "@/components/ui/toaster"
 
 
 function Layout() {
@@ -17,6 +18,7 @@ function Layout() {
         <ResizablePanel defaultSize={80} minSize={70}>
           <ScrollArea className="h-full w-full p-4">
             <Outlet />
+            <Toaster />
           </ScrollArea>
         </ResizablePanel>
       </ResizablePanelGroup>

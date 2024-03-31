@@ -4,12 +4,14 @@ import PlayCard from "../../../components/playcard";
 import { db } from '../../../firebase/firebase';
 import getRandomNumber from "../../../utils/getRandomNumber";
 import { useState, useEffect } from "react";
+import useShowToast from '../../../hooks/useShowToast';
 
 
 export default function GamePlay() {
     const [gameData, setGameData] = useState([{},{}]); /* gameData1과 gameData2를 배열에 저장 */
     const [round, setRound] = useState(1); /* 게임 라운드, 시작시 1 게임진행시마다 1증가 */
     const [gameLog, setGameLog] = useState([]);
+    const showToast = useShowToast();
     const params = useParams();
 
     const gamemode = params.gamemode;
@@ -60,7 +62,7 @@ export default function GamePlay() {
                 }
                 attempt++;
             } catch (error) {
-                console.error("쿼리 중 오류 발생:", error);
+                showToast(error, error.message);
                 break;
             }
         }
@@ -96,7 +98,7 @@ export default function GamePlay() {
                 }
                 attempt++;
             } catch (error) {
-                console.error("쿼리 중 오류 발생:", error);
+                showToast(error, error.message);
                 break;
             }
         }
@@ -137,12 +139,12 @@ export default function GamePlay() {
     }
 
     return (
-        <section id={params.gamemode} className="@container">
+        <section id={params.gamemode} className="@container px-4">
             <div className="flex">
-                <h2 className='font-bold text-neutral-700 text-xl @md:text-2xl @lg:text-5xl mb-2'>
+                <h2 className='font-bold text-neutral-700 text-xl md:text-2xl lg:text-3xl mb-2'>
                     스포티파이에서<br />어느 {getGameModeTitle(gamemode)} 더 인기있을까요? ({genre}) 
                 </h2>
-                <div>
+                <div className="">
                     라운드 : {round}
                     로그: {gameLog.join(' ')}
                 </div>

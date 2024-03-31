@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label"
-import { Toaster } from "@/components/ui/toaster";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import useShowToast from "../../hooks/useShowToast";
 import processArtistData from "../../utils/processArtistData";
@@ -131,7 +130,6 @@ export default function AddDataForm() {
             <Button onClick={()=>setIds([''])}>아이디 초기화하기</Button>
         </CardFooter>
         </Card>
-        <Toaster />
     </>
   )
 };

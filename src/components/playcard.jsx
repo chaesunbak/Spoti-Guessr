@@ -1,4 +1,5 @@
 import { useColor } from 'color-thief-react';
+import { Skeleton } from "@/components/ui/skeleton"
 import { Progress } from "@/components/ui/progress"
 import { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,8 +7,16 @@ import { faVolumeHigh, faVolumeXmark, faPlay, faPause } from '@fortawesome/free-
 
 export default function PlayCard({ gameData, onClick }) {
 
-    /* 샤드 시엔 스켈레톤으로 추가할것 */
-    if (!gameData) return ( "불러오는중" )
+    /* 게임 데이터 없을시 스켈레톤 */
+    if (!gameData) return (
+        <div className="flex flex-col rounded-xl p-3 md:p-4 lg:p-5 xl:p-6 drop-shadow-md">
+            <div className='w-full aspect-square relative'>
+                <Skeleton className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-full max-w-full rounded-md" />
+            </div>
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-4 w-1/3" />
+        </div>
+    )
 
     /* color-thief 라이브러리를 사용하여 이미지의 주요색깔을 가져옴 */
     const { data, loading, error } = useColor(gameData.image, 'rgbString', { crossOrigin: 'Anonymous' });
@@ -73,25 +82,23 @@ export default function PlayCard({ gameData, onClick }) {
         .filter(Boolean)
         .join(", ");
 
-    const release_date = gameData.release_date;
-    const relaseYear = release_date.substring(0,4);
-
-
     return (
-        <div className="rounded-xl p-3 md:p-4 lg:p-5 xl:p-6 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
-            <img className="aspect-square rounded-md m-auto" src={gameData.image} alt={gameData.name} />
-            <div className="text-white font-bold text-md @md:text-lg @lg:text-2xl @xl:text-5xl mt-4 bg-black bg-opacity-20 size-fit">{gameData.name}</div>
+        <div className="flex flex-col rounded-xl p-3 md:p-4 lg:p-5 xl:p-6 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
+             <div className='w-full aspect-square relative'>
+                <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-full max-w-full rounded-md" src={gameData.image} alt={gameData.name} />
+            </div>
+            <div className="text-white font-bold text-md md:text-xl lg:text-3xl mt-2 md:mt-3 lg:mt-4 bg-black bg-opacity-20 size-fit">{gameData.name}</div>
             {artistNames && gameData.release_date && (
-                <div className='text-slate-200 font-light text-base bg-black bg-opacity-20 size-fit'>
-                    {artistNames} · {relaseYear}
+                <div className='text-slate-200 font-light text-x md:text-md lg:text-xl bg-black bg-opacity-20 size-fit'>
+                    {artistNames} · {gameData.release_date.substring(0,4)}
                 </div>
             )}
             <audio ref={audioRef} className='hidden'controls src={gameData.preview_url} onTimeUpdate={updateProgress}/>
-            <div className='grid grid-cols-5 text-white text-2xl my-1'>
-                <FontAwesomeIcon className='col-start-3 aspect-square rounded hover:bg-black/20 p-2 m-auto' icon={isPlaying ? faPause : faPlay} onClick={(e) => {e.stopPropagation(); togglePlay();}}/>
-                <FontAwesomeIcon className="col-start-5 aspect-square rounded hover:bg-black/20 p-2 m-auto" icon={isMuted ? faVolumeXmark : faVolumeXmark} onClick={(e) => {e.stopPropagation(); toggleMute();}}/>
+            <div className='grid grid-cols-5 text-white text-2xl'>
+                <FontAwesomeIcon className='col-start-3 aspect-square rounded hover:bg-black/20 p-4 m-auto' icon={isPlaying ? faPause : faPlay} onClick={(e) => {e.stopPropagation(); togglePlay();}}/>
+                <FontAwesomeIcon className="col-start-5 aspect-square rounded hover:bg-black/20 p-4 m-auto" icon={isMuted ? faVolumeXmark : faVolumeHigh} onClick={(e) => {e.stopPropagation(); toggleMute();}}/>
             </div>
-            <Progress value={progress} className="mx-auto my-4" />
+            <Progress value={progress} className="mx-auto mt-2 md:mt-3 lg:mt-5" />
         </div>
     )
 }
