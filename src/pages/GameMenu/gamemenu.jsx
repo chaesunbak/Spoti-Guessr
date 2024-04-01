@@ -27,7 +27,7 @@ export default function GameMenu() {
     }
 
     return (
-        <section id={params.gamemode} className='@container'>
+        <section id={params.gamemode} className='@container p-2 md:p-3 lg:p-4'>
             <h2 className='font-bold text-neutral-700 text-3xl @md:text-5xl @lg:text-6xl mb-2'>
                 게임모드 : {title}
             </h2>

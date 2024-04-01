@@ -1,10 +1,9 @@
 import { useColor } from 'color-thief-react';
 import { Skeleton } from "@/components/ui/skeleton"
-import { Progress } from "@/components/ui/progress"
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVolumeHigh, faVolumeXmark, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
-import Counter from './counter';
+import MusicPlayBar from './musicplaybar';
 
 export default function PlayCard({ gameData, onClick }) {
 
@@ -93,12 +92,12 @@ export default function PlayCard({ gameData, onClick }) {
                     {artistNames} · {gameData.release_date.substring(0,4)}
                 </div>
             )}
-            <audio ref={audioRef} className='hidden'controls src={gameData.preview_url} onTimeUpdate={updateProgress}/>
+            {gameData.preview_url && ( <audio ref={audioRef} className='hidden'controls src={gameData.preview_url} onTimeUpdate={updateProgress}/>)}
             <div className='grid grid-cols-5 text-white text-xl my-2 md:my-3 lg:my-4'>
                 <FontAwesomeIcon className='col-start-3 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto' icon={isPlaying ? faPause : faPlay} onClick={(e) => {e.stopPropagation(); togglePlay();}}/>
                 <FontAwesomeIcon className="col-start-5 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto" icon={isMuted ? faVolumeXmark : faVolumeHigh} onClick={(e) => {e.stopPropagation(); toggleMute();}}/>
             </div>
-            <Progress value={progress} className="mx-auto mt-2 md:mt-3 lg:mt-5" />
+            <MusicPlayBar progress={progress} preview_url={gameData.preview_url}/>
         </div>
     )
 }
