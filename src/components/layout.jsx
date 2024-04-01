@@ -16,7 +16,7 @@ function Layout() {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={80} minSize={70}>
-          <ScrollArea className="h-full w-full p-4">
+          <ScrollArea>
             <Outlet />
             <Toaster />
           </ScrollArea>

@@ -33,6 +33,7 @@
     "cmdk": "^0.2.1",
     "color-thief-react": "^2.1.0",
     "firebase": "^10.8.1",
+    "framer-motion": "^11.0.24",
     "lucide-react": "^0.341.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

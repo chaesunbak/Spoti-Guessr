@@ -1,9 +1,10 @@
 import { useColor } from 'color-thief-react';
 import { Skeleton } from "@/components/ui/skeleton"
 import { Progress } from "@/components/ui/progress"
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVolumeHigh, faVolumeXmark, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import Counter from './counter';
 
 export default function PlayCard({ gameData, onClick }) {
 
@@ -24,7 +25,6 @@ export default function PlayCard({ gameData, onClick }) {
     const [isMuted, setIsMuted] = useState(false);
     const [progress, setProgress] = useState(0);
     const audioRef = useRef(null);
-
 
     const bgStyle = {
         backgroundColor: loading || error ? 'white' : data,
@@ -83,20 +83,20 @@ export default function PlayCard({ gameData, onClick }) {
         .join(", ");
 
     return (
-        <div className="flex flex-col rounded-xl p-3 md:p-4 lg:p-5 xl:p-6 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
-             <div className='w-full aspect-square relative'>
-                <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-full max-w-full rounded-md" src={gameData.image} alt={gameData.name} />
+        <div className="flex flex-col justify-between rounded-xl p-3 md:p-4 lg:p-5 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer max-h-80 md:max-h-none" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
+            <div className='w-full max-h-96 aspect-square relative flex items-center justify-center'>
+                <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-full max-w-full rounded-md shadow-md md:shadow-lg" src={gameData.image} alt={gameData.name} />
             </div>
-            <div className="text-white font-bold text-md md:text-xl lg:text-3xl mt-2 md:mt-3 lg:mt-4 bg-black bg-opacity-20 size-fit">{gameData.name}</div>
+            <div className="text-white font-bold text-md md:text-xl lg:text-3xl my-2 md:my-3 lg:my-4 bg-black bg-opacity-20 size-fit">{gameData.name}</div>
             {artistNames && gameData.release_date && (
                 <div className='text-slate-200 font-light text-x md:text-md lg:text-xl bg-black bg-opacity-20 size-fit'>
                     {artistNames} · {gameData.release_date.substring(0,4)}
                 </div>
             )}
             <audio ref={audioRef} className='hidden'controls src={gameData.preview_url} onTimeUpdate={updateProgress}/>
-            <div className='grid grid-cols-5 text-white text-2xl'>
-                <FontAwesomeIcon className='col-start-3 aspect-square rounded hover:bg-black/20 p-4 m-auto' icon={isPlaying ? faPause : faPlay} onClick={(e) => {e.stopPropagation(); togglePlay();}}/>
-                <FontAwesomeIcon className="col-start-5 aspect-square rounded hover:bg-black/20 p-4 m-auto" icon={isMuted ? faVolumeXmark : faVolumeHigh} onClick={(e) => {e.stopPropagation(); toggleMute();}}/>
+            <div className='grid grid-cols-5 text-white text-xl my-2 md:my-3 lg:my-4'>
+                <FontAwesomeIcon className='col-start-3 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto' icon={isPlaying ? faPause : faPlay} onClick={(e) => {e.stopPropagation(); togglePlay();}}/>
+                <FontAwesomeIcon className="col-start-5 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto" icon={isMuted ? faVolumeXmark : faVolumeHigh} onClick={(e) => {e.stopPropagation(); toggleMute();}}/>
             </div>
             <Progress value={progress} className="mx-auto mt-2 md:mt-3 lg:mt-5" />
         </div>

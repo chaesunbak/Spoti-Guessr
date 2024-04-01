@@ -5,6 +5,8 @@ import { db } from '../../../firebase/firebase';
 import getRandomNumber from "../../../utils/getRandomNumber";
 import { useState, useEffect } from "react";
 import useShowToast from '../../../hooks/useShowToast';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fa0, fa1, fa2, fa3, fa4, fa5, fa6, fa7, fa8, fa9 } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function GamePlay() {
@@ -139,17 +141,17 @@ export default function GamePlay() {
     }
 
     return (
-        <section id={params.gamemode} className="@container px-4">
-            <div className="flex">
-                <h2 className='font-bold text-neutral-700 text-xl md:text-2xl lg:text-3xl mb-2'>
+        <section id={params.gamemode} className="h-screen flex flex-col p-2 md:p-3 lg:p-4">
+            <div className="flex flex-col md:flex-row my-1">
+                <h2 className='font-bold text-neutral-700 text-lg md:text-xl lg:text-2xl mb-2'>
                     스포티파이에서<br />어느 {getGameModeTitle(gamemode)} 더 인기있을까요? ({genre}) 
                 </h2>
-                <div className="">
-                    라운드 : {round}
-                    로그: {gameLog.join(' ')}
+                <div className="flex justify-between">
+                    <div>{round}</div>
+                    <div>{gameLog.join(' ')}</div>
                 </div>
             </div>
-            <div className="flex gap-2 md:gap-4 lg:gap-6 xl:gap-8 mx-auto">
+            <div className="flex h-full gap-2 md:gap-4 lg:gap-6 xl:gap-8">
                 {gameData.map((data, index) => (
                     <PlayCard key={index} gameData={data} onClick={() => checkAnswer(index)} />
                 ))}
