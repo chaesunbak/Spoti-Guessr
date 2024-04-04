@@ -14,9 +14,14 @@ export default function SideBar() {
                     <CommandList>
                         <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
                     <CommandGroup heading="게임모드" className="text-sm">
-                        <CommandItem className="text-md"><Link to="/artists">아티스트</Link></CommandItem>
-                        <CommandItem className="text-md"> <Link to="/albums">앨범</Link></CommandItem>
-                        <CommandItem className="text-md"><Link to="/tracks">트랙</Link></CommandItem>
+                        <CommandItem className="text-md"><Link to="game/artists">아티스트</Link></CommandItem>
+                        <CommandItem className="text-md"> <Link to="game/albums">앨범</Link></CommandItem>
+                        <CommandItem className="text-md"><Link to="game/tracks">트랙</Link></CommandItem>
+                    </CommandGroup>
+                    <CommandSeparator />
+                    <CommandGroup heading="데이터" className="text-sm">
+                        <CommandItem className="text-md"><Link to="/info">살펴보기</Link></CommandItem>
+                        <CommandItem className="text-md"><Link to="/add">추가하기</Link></CommandItem>
                     </CommandGroup>
                     <CommandSeparator />
                     <CommandGroup heading="설정" className="text-sm">

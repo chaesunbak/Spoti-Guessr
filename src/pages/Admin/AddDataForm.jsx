@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import useShowToast from "../../hooks/useShowToast";
+import { useToast } from "@/components/ui/use-toast"
 import processArtistData from "../../utils/processArtistData";
 import processAlbumData from "../../utils/processAlbumData";
 import processTrackData from "../../utils/processTrackData";
@@ -15,7 +15,7 @@ export default function AddDataForm() {
   const [ids, setIds] = useState(['']);
   const [mode, setMode] = useState('artists'); /* 'artists', 'albums', 'track' 중 1 */
   const [isGettingToken, setIsGettingToken] = useState(false);
-  const showToast = useShowToast();
+  const { toast } = useToast()
 
   const modeWithoutS = mode.slice(0, -1);
 
@@ -35,9 +35,15 @@ export default function AddDataForm() {
 
       const data = await response.json();
       setToken(data.access_token);
-      showToast('토큰이 발급되었습니다.', token);
+      toast({
+        title: "토큰이 발급되었습니다.",
+        description: `${token}`,
+      })
     } catch (error) {
-      showToast(error, error.message);
+      toast({
+        title: '❗ 음..뭔가 잘못됬습니다.',
+        description: error.message,
+      })
     } finally {
       setIsGettingToken(false);
     }
@@ -61,22 +67,22 @@ export default function AddDataForm() {
     />
   ));
 
-  async function getDataAndUpload(ids, token) {
+  async function getDataAndUpload(ids, token ) {
     switch (mode) {
       case "artists":
-        await processArtistData(ids, token);
+        await processArtistData(ids, token, toast);
         break;
       case "albums":
-        await processAlbumData(ids, token)
+        await processAlbumData(ids, token, toast)
         break;
       case "tracks":
-        await processTrackData(ids, token);
+        await processTrackData(ids, token, toast);
         break;
     }
   }
 
   return (
-    <>
+    <div className="grid grid-cols-3">
         <Card className="w-[400px]">
             <CardHeader>
                 <CardTitle>1. 토큰 받기</CardTitle>
@@ -130,6 +136,6 @@ export default function AddDataForm() {
             <Button onClick={()=>setIds([''])}>아이디 초기화하기</Button>
         </CardFooter>
         </Card>
-    </>
+    </div>
   )
 };

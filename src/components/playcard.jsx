@@ -1,11 +1,22 @@
 import { useColor } from 'color-thief-react';
 import { Skeleton } from "@/components/ui/skeleton"
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVolumeHigh, faVolumeXmark, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import { faVolumeHigh, faVolumeXmark, faPlay, faPause, faX } from '@fortawesome/free-solid-svg-icons';
 import MusicPlayBar from './musicplaybar';
+import Counter from './counter';
+import { Link, useParams } from 'react-router-dom';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+  } from "@/components/ui/tooltip"
 
-export default function PlayCard({ gameData, onClick }) {
+export default function PlayCard({ gameData, onClick, isCheckingAnswer }) {
+    const params = useParams();
+
+    const gamemode = params.gamemode;
 
     /* 게임 데이터 없을시 스켈레톤 */
     if (!gameData) return (
@@ -76,25 +87,62 @@ export default function PlayCard({ gameData, onClick }) {
         }
     };
 
-    /* 앨범 또는 트랙의 아티스트 이름 나열 해줌 예시(아이유, 김동률) */
-    const artistNames = [gameData.artist_name1, gameData.artist_name2, gameData.artist_name3]
+    const artistLinks = [gameData.artist1_name, gameData.artist2_name, gameData.artist3_name]
         .filter(Boolean)
-        .join(", ");
+        .map((name, index) => {
+            const artistId = gameData[`artist${index+1}_id`];
+            return (
+                <React.Fragment key={artistId}>
+                    {index > 0 && ", "}
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Link to={`/data/artists/${artistId}`} className="hover:underline">
+                                {name}
+                                </Link>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                            <p>클릭 시 해당 아티스트 페이지로 이동합니다.</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </React.Fragment>
+            );
+        }
+    );
+
+        // artistLinks를 사용하여 렌더링
 
     return (
-        <div className="flex flex-col justify-between rounded-xl p-3 md:p-4 lg:p-5 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer max-h-80 md:max-h-none" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
+        <div className="flex flex-col justify-between rounded-xl p-3 md:p-4 lg:p-5 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer max-h-[22rem] md:max-h-none" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
             <div className='w-full max-h-96 aspect-square relative flex items-center justify-center'>
-                <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-full max-w-full rounded-md shadow-md md:shadow-lg" src={gameData.image} alt={gameData.name} />
+                <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-full max-w-full rounded-md shadow-md md:shadow-lg hover:scale-105" src={gameData.image} alt={gameData.name} />
             </div>
-            <div className="text-white font-bold text-md md:text-xl lg:text-3xl my-2 md:my-3 lg:my-4 bg-black bg-opacity-20 size-fit">{gameData.name}</div>
-            {artistNames && gameData.release_date && (
-                <div className='text-slate-200 font-light text-x md:text-md lg:text-xl bg-black bg-opacity-20 size-fit'>
-                    {artistNames} · {gameData.release_date.substring(0,4)}
+            <div>
+                <div className="text-white font-bold text-base md:text-xl lg:text-3xl bg-black bg-opacity-20 size-fit">
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger >
+                                <Link to={`/data/${gamemode}/${gameData.id}`} className='hover:underline'>
+                                    {gameData.name}
+                                </Link>
+                            </TooltipTrigger>
+                            <TooltipContent className="font-normal">
+                                <p>클릭 시 해당 {gamemode} 페이지로 이동합니다.</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 </div>
-            )}
+                {artistLinks && gameData.release_date && (
+                    <div className='text-slate-200 font-light text-sm md:text-md lg:text-xl bg-black bg-opacity-20 size-fit'>
+                        {artistLinks} · {gameData.release_date.substring(0,4)}
+                    </div>
+                )}
+            </div>
             {gameData.preview_url && ( <audio ref={audioRef} className='hidden'controls src={gameData.preview_url} onTimeUpdate={updateProgress}/>)}
             <div className='grid grid-cols-5 text-white text-xl my-2 md:my-3 lg:my-4'>
-                <FontAwesomeIcon className='col-start-3 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto' icon={isPlaying ? faPause : faPlay} onClick={(e) => {e.stopPropagation(); togglePlay();}}/>
+                {isCheckingAnswer && (<Counter className="col-start-1 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto" to={gameData.popularity}/>)}
+                <FontAwesomeIcon className='col-start-3 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto' icon={gameData.preview_url === null ? faX : (isPlaying ? faPause : faPlay)}  onClick={(e) => {e.stopPropagation(); togglePlay();}}/>
                 <FontAwesomeIcon className="col-start-5 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto" icon={isMuted ? faVolumeXmark : faVolumeHigh} onClick={(e) => {e.stopPropagation(); toggleMute();}}/>
             </div>
             <MusicPlayBar progress={progress} preview_url={gameData.preview_url}/>

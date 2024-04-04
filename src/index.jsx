@@ -10,6 +10,7 @@ import Settings from './pages/Settings/settings';
 import Auth from './pages/Auth/auth';
 import "./index.css";
 import Admin from './pages/Admin/admin';
+import Data from './pages/Data/data';
 
 function App() {
 
@@ -18,12 +19,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout/>}>
           <Route index element={<Home/>}/>
-          <Route path=':gamemode' element={<GameMenu/>}/>
-          <Route path=':gamemode/:genre' element={<GamePlay/>}/>
+          <Route path='game/:gamemode' element={<GameMenu/>}/>
+          <Route path='game/:gamemode/:genre' element={<GamePlay/>}/>
+          <Route path='data/:gamemode/:id' element={<Data/>}/>
+          <Route path='add' element={<Admin/>}/>
           <Route path='profile' element={<Profile/>}/>
           <Route path='settings' element={<Settings/>}/>
           <Route path='auth' element={<Auth/>}/>
-          <Route path='admin' element={<Admin />}/>
         </Route>
       </Routes>
     </BrowserRouter>

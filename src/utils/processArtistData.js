@@ -3,57 +3,72 @@ import { db } from "../firebase/firebase";
 import getRandomNumber from "./getRandomNumber";
 import setDelay from "./setDelay";
 
-const processArtistData = async (ids, token) => {
-    for (const id of ids) {
-        try {
-            await setDelay(2000);
+const processArtistData = async (ids, token, toast) => {
 
-            const artistResponse = await fetch(
-                `https://api.spotify.com/v1/artists/${id}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    },
-                }
-            );
+  // ID 배열을 20개 단위로 분할
+  const chunkedIds = [];
+  for (let i = 0; i < ids.length; i += 20) {
+    chunkedIds.push(ids.slice(i, i + 20));
+  }
 
-            const artist = await artistResponse.json();
+  for (const chunk of chunkedIds) {
+    try {
+      const artistsResponse = await fetch(
+        `https://api.spotify.com/v1/artists?ids=${chunk.join(",")}`,
+        {
+          method: "GET",
+          headers: {
+          "Authorization": `Bearer ${token}`
+          },
+          }
+      );
 
-            await setDelay(2000);
+      const artistsData = await artistsResponse.json();
 
-            const top_tracksResponse = await fetch(
-                `https://api.spotify.com/v1/artists/${id}/top-tracks`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    },
-                }
-            );
+      for (const artist of artistsData.artists) {
+        await setDelay(2000);
 
-            const top_track = await top_tracksResponse.json();
+        const top_tracksResponse = await fetch(
+          `https://api.spotify.com/v1/artists/${artist.id}/top-tracks`,
+          {
+            method: "GET",
+            headers: {
+              "Authorization": `Bearer ${token}`
+            },
+          }
+        );
 
-            const docData = {
-                name: artist.name,
-                followers: artist.followers.total, /*아직 사용되지 않으나 혹시 몰라서 추가 */
-                image: artist.images[0]?.url,
-                genres: artist.genres,
-                popularity: artist.popularity,
-                updatedAt: Date.now(),
-                randomNum1: getRandomNumber(0,9999),
-                randomNum2: getRandomNumber(0,9999),
-                randomNum3: getRandomNumber(0,9999),
-                preview_url: top_track.tracks[0]?.preview_url,
-            };
+        const top_tracks = await top_tracksResponse.json();
 
-            await setDoc(doc(db, "artists", artist.id), docData);
-            console.log(`${artist.name} 업로드 성공`);
+        const docData = {
+          id: artist.id,
+          type: artist.type,
+          name: artist.name,
+          spotifylink: artist.external_urls.spotify,
+          followers: artist.followers.total,
+          image: artist.images[0]?.url,
+          genres: artist.genres,
+          popularity: artist.popularity,
+          updatedAt: Date.now(),
+          randomNum1: getRandomNumber(0,9999),
+          randomNum2: getRandomNumber(0,9999),
+          randomNum3: getRandomNumber(0,9999),
+          preview_url: top_tracks.tracks[0]?.preview_url,
+        };
 
-        } catch (error) {
-            console.error(error);
-        }
+      await setDoc(doc(db, "artists", artist.id), docData);
+      toast({
+          title: '✅ 데이터 업로드 성공',
+          description: `아티스트 : ${artist.name}`,
+      });
+      }
+    } catch (error) {
+      toast({
+        title: '❗ 음..뭔가 잘못됬습니다.',
+        description: error.message,
+      });
     }
+  }
 };
 
 export default processArtistData;

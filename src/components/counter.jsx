@@ -1,30 +1,16 @@
-import { useEffect, useRef } from "react";
-import { useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion ,animate, useMotionValue, useTransform } from "framer-motion";
+import { useEffect } from "react";
 
-export default function Counter({ value, direction = "up" }) {
-  const ref = useRef(null);
-  const motionValue = useMotionValue(direction === "down" ? value : 0);
-  const springValue = useSpring(motionValue, {
-    damping: 100,
-    stiffness: 100,
-  });
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+export default function Counter({ to }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, Math.round);
 
   useEffect(() => {
-    if (isInView) {
-      motionValue.set(direction === "down" ? 0 : value);
-    }
-  }, [motionValue, isInView, value, direction]);
+    count.set(0);
+    const controls = animate(count, to, { duration: 3 });
 
-  useEffect(() => {
-    return springValue.on("change", (latest) => {
-      if (ref.current) {
-        ref.current.textContent = Intl.NumberFormat("en-US").format(
-          latest.toFixed(0)
-        );
-      }
-    });
-  }, [springValue]);
+    return () => controls.stop();
+  }, [to]);
 
-  return <span ref={ref} />;
+  return <div className="text-white text-3xl drop-shadow-lg"><motion.div>{rounded}</motion.div></div>;
 }

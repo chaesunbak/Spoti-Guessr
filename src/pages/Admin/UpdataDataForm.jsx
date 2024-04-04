@@ -4,16 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label"
 import { Toaster } from "@/components/ui/toaster";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import useShowToast from "../../hooks/useShowToast";
 import updateCollection from "../../utils/updateCollection";
+import { useToast } from "@/components/ui/use-toast"
 
 export default function UpdateDataForm() {
 
   const [token, setToken] = useState('');
   const [ids, setIds] = useState(['']);
-  const [mode, setMode] = useState('artists'); /* 'artists', 'albums', 'track' 중 1 */
+  const [mode, setMode] = useState('artists'); /* 'artists', 'albums', 'tracks' 중 1 */
   const [isGettingToken, setIsGettingToken] = useState(false);
-  const showToast = useShowToast();
+  const { toast } = useToast();
 
 
   const clientID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
@@ -32,9 +32,15 @@ export default function UpdateDataForm() {
 
       const data = await response.json();
       setToken(data.access_token);
-      showToast('토큰이 발급되었습니다.', token);
+      toast({
+        title: "토큰이 발급되었습니다.",
+        description: `${token}`,
+      })
     } catch (error) {
-      showToast(error, error.message);
+      toast({
+        title: '❗ 음..뭔가 잘못됬습니다.',
+        description: error.message,
+      })
     } finally {
       setIsGettingToken(false);
     }
@@ -86,10 +92,9 @@ export default function UpdateDataForm() {
         <CardContent className="flex flex-col gap-1">
         </CardContent>
         <CardFooter>
-            <Button onClick={()=>updateCollection(mode, token)} className='w-full'>데이터 업로드하기</Button>
+            <Button onClick={()=>updateCollection(mode, token, toast)} className='w-full'>데이터 업로드하기</Button>
         </CardFooter>
         </Card>
-        <Toaster />
     </>
   )
 };

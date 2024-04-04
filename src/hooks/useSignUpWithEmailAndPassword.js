@@ -19,7 +19,7 @@ const useSignUpWithEmailAndPassword = (inputs) => {
         try {
             const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
             if (!newUser && error) {
-                showToast("Error", error.message);
+                showToast(error, error.message);
 				return;
             }
             if (newUser) {
@@ -35,7 +35,7 @@ const useSignUpWithEmailAndPassword = (inputs) => {
                 loginUser(userDoc);
             }
         } catch (error) {
-            showToast("Error", error.message);
+            showToast(error, error.message);
         };
     }
     return { loading, error, signup};

@@ -11,7 +11,7 @@ function Layout() {
 
   return (
       <ResizablePanelGroup autoSaveId="persistence" direction={isMobile ? "vertical" : "horizontal"} className="size-full">
-        <ResizablePanel defaultSize={20} minSize={5}>
+        <ResizablePanel defaultSize={20} minSize={5} className="h-full">
            <SideBar className="h-full p-4" />
         </ResizablePanel>
         <ResizableHandle withHandle />
