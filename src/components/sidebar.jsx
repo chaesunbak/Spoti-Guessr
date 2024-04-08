@@ -2,15 +2,17 @@ import { Link } from "react-router-dom"
 import { Separator } from "@/components/ui/separator"
 import UserIcon from "./UserIcon/usericon"
 import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command"
+import { useMediaQuery } from 'react-responsive';
 
 export default function SideBar() {
+    const isMobile = useMediaQuery({ maxWidth: 767 });
+
     return (
         <div>
-            <Link to="/"><h1 className="font-sans text-2xl font-bold m-1">Spoti Guesser</h1></Link>
-
+            {!isMobile && (<><Link to="/"><h1 className="font-sans text-2xl font-bold m-1">Spoti Guesser</h1></Link>
             <Separator />
             <UserIcon/>
-            <Separator />
+            <Separator /></>)}
             <Command>
                 <CommandInput placeholder="검색어를 입력해주세요" />
                     <CommandList>

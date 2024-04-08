@@ -44,7 +44,6 @@ export default function Home() {
                             </CardContent>
                         </Card>
                     </Link>
-
                 </CardContent>
             </Card>
             <Card className="max-w-[30rem] h-fit">
@@ -52,7 +51,6 @@ export default function Home() {
                     <CardTitle>스포티 게서로 음악을 새롭게 즐겨보세요.</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p>환영합니다. 오늗도 즐거운 날입니다.</p>
                     <p>지금 스포티파이에서 어떤 곡이 더 인기있을까요?</p>
                     <p>모든 음악 정보는 스포티파이를 통해 제공됩니다.</p>
                     <p>무료 서버를 사용하기 때문에 사용량 제한이 있습니다. 사용량이 초과한 경우 다음에 만나요</p>

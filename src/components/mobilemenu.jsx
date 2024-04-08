@@ -6,12 +6,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+  import { Button } from "@/components/ui/button"
 import SideBar from "./sidebar"
 
 export default function MobilieMenu() {
     return (
-        <DropdownMenu className="">
-            <DropdownMenuTrigger>메뉴</DropdownMenuTrigger>
+        <DropdownMenu>
+            <DropdownMenuTrigger>
+                <Button variant="outline">메뉴</Button>
+            </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
                 <SideBar />
             </DropdownMenuContent>
