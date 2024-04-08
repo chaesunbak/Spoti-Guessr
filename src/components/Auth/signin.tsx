@@ -1,32 +1,20 @@
-import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import GoogleAuth from "./googleauth.jsx";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-  } from "@/components/ui/card"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import useSignIn from '../../hooks/useSignIn';
+import { useToast } from "@/components/ui/use-toast"
 
 export default function SignIn() {
+
     const { login , loggingin, error} = useSignIn();
+    const { toast } = useToast();
+
 
     const formSchema = z.object({
         email: z.string().email({ message: "올바르지 않은 이메일입니다." }),
@@ -41,8 +29,19 @@ export default function SignIn() {
         },
       });
 
-    const handleSubmit = (inputs) => {
-        login(inputs);
+    const handleSubmit = async (inputs) => {
+       try {
+            await login(inputs, toast);
+            toast({
+                title: '✅ 환영합니다',
+            })
+       } catch (error) {
+            toast({
+                title: '❗음..뭔가 잘못됬습니다.',
+                description: error.message,
+            })
+       }
+        
     }
 
     return (
@@ -65,7 +64,7 @@ export default function SignIn() {
                                 return <FormItem>
                                     <FormLabel>이메일</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="exmaple@gmail.com" tpye="email" {...field} />
+                                        <Input placeholder="exmaple@gmail.com" type="email" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -84,7 +83,7 @@ export default function SignIn() {
                                 </FormItem>
                             }}
                         />
-                        <Button type="submit" className="w-full mt-4" disabled={loggingin}>로그인</Button>
+                        <Button type="submit" className="w-full my-2" disabled={loggingin}>로그인</Button>
                     </form>
                 </Form>
             </CardContent>

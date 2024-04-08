@@ -1,15 +1,13 @@
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import useShowToast from "./useShowToast";
 import useAuthStore from "../store/authStore";
 
 const useLogin = () => {
 	const [signInWithEmailAndPassword, , loggingin, error] = useSignInWithEmailAndPassword(auth);
-    const showToast = useShowToast();
 	const loginUser = useAuthStore((state) => state.login);
 
-	const login = async (inputs) => {
+	const login = async (inputs, toast ) => {
 		try {
 			const userCred = await signInWithEmailAndPassword(inputs.email, inputs.password);
 
@@ -20,7 +18,7 @@ const useLogin = () => {
 				loginUser(docSnap.data());
 			}
 		} catch (error) {
-			showToast("Error", error.message);
+			console.log("Error", error.message);
 		}
 	};
 

@@ -1,17 +1,15 @@
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth'
 import { auth, db } from '../firebase/firebase';
 import useAuthStore from "../store/authStore";
-import useShowToast from "./useShowToast";
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import getRandomNickname from '../utils/getRandomNickname';
 
 
 const useContinueWithGoogle = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-    const showToast = useShowToast();
     const loginUser = useAuthStore((state) => state.login);
 
-    const handleContinueWithGoogle = async () => {
+    const handleContinueWithGoogle = async (toast) => {
 		try {
 			const newUser = await signInWithGoogle();
 			if (!newUser && error) {
@@ -40,7 +38,7 @@ const useContinueWithGoogle = () => {
 				loginUser(userDoc);
 			}
 		} catch (error) {
-			showToast("Error", error.message);
+			console.log("Error", error.message);
 		}
 	};
 

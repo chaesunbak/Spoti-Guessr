@@ -8,6 +8,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast"
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z
       .object({
@@ -22,6 +24,8 @@ const formSchema = z
 
 export default function SignUp() {
     const { loading, error, signup } = useSignUpWithEmailAndPassword();
+    const { toast } = useToast()
+    const navigate = useNavigate();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -32,8 +36,20 @@ export default function SignUp() {
         },
       });
 
-    const handleSubmit = (inputs) => {
-        signup(inputs);
+    const handleSubmit = async (inputs) => {
+        try {
+            await signup(inputs);
+            toast({
+                title: '✅ 환영합니다',
+            })
+            navigate(-1);
+        } catch (error) { 
+            toast({
+                title: '❗음..뭔가 잘못됬습니다.',
+                description: error.message,
+            })
+        }
+        
     }
 
     return (
@@ -56,7 +72,7 @@ export default function SignUp() {
                                 return <FormItem>
                                     <FormLabel>이메일</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="exmaple@gmail.com" tpye="email" {...field} />
+                                        <Input placeholder="exmaple@gmail.com" type="email" {...field} />
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
@@ -88,7 +104,7 @@ export default function SignUp() {
                                 </FormItem>
                             }}
                         />
-                        <Button type="submit" disabled={loading} className="w-full">가입하기</Button>
+                        <Button type="submit" disabled={loading} className="w-full my-2">가입하기</Button>
                     </form>
                 </Form>
             </CardContent>

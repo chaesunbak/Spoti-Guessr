@@ -1,7 +1,6 @@
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth, db } from '../firebase/firebase';
 import { doc, setDoc } from "firebase/firestore";
-import useShowToast from "./useShowToast";
 import useAuthStore from '../store/authStore';
 import getRandomNickname from '../utils/getRandomNickname';
 
@@ -12,7 +11,6 @@ const useSignUpWithEmailAndPassword = (inputs) => {
         loading,
         error,
       ] = useCreateUserWithEmailAndPassword(auth);
-    const showToast = useShowToast();
     const loginUser = useAuthStore(state => state.login);
 
     const signup = async ( inputs ) => {
@@ -35,7 +33,7 @@ const useSignUpWithEmailAndPassword = (inputs) => {
                 loginUser(userDoc);
             }
         } catch (error) {
-            showToast(error, error.message);
+            console.log("Error", error.message);
         };
     }
     return { loading, error, signup};

@@ -27,10 +27,7 @@ const UserIcon = () => {
                 <DropdownMenuLabel>{user ? user.nickname : "로그인 안됨"}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                    <Link to="/profile">프로필</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <Link to="/settings">설정</Link>
+                    <Link to="/acount">계정</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {!user ? (<DropdownMenuItem><Link to='/auth'>로그인</Link></DropdownMenuItem>): (<DropdownMenuItem className="text-red-500" onClick={handleLogOut}>로그아웃</DropdownMenuItem>)}
