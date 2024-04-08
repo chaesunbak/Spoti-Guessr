@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="kr">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스포티 게서 : 무엇이 더 유명할까요?</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://spotiguessr.chaesunbak.com">
+    <meta property="og:title" content="스포티 게서">
+    <!-- <meta property="og:image" content="https://example.com/image.jpg"> -->
+    <meta property="og:description" content="BTS, BLACKPINK 둘 중에 무엇이 지금 스포티파이에서 인기있을까요?">
+    <meta property="og:site_name" content="스포티 게서">
+    <meta property="og:locale" content="kr_KR">
+    <!-- 다음의 태그는 필수는 아니지만, 포함하는 것을 추천함 -->
+    <!-- <meta property="og:image:width" content="1200"> -->
+    <!-- <meta property="og:image:height" content="630"> -->
+
+    <!-- <meta name="twitter:card" content="트위터 카드 타입(요약정보, 사진, 비디오)" /> 
+    <meta name="twitter:title" content="스포티 게서" />
+    <meta name="twitter:description" content="BTS, BLACKPINK 둘 중에 무엇이 지금 스포티파이에서 인기있을까요?" />
+    <meta name="twitter:image" content="표시되는 이미지 " /> -->
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/10.10.0/firebase-app-compat.js"></script>
@@ -22,30 +37,9 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
   </head>
   <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <div id="root"></div>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -85,5 +79,6 @@
         }
       });
     </script>
+    <script type="module" src="../src//index.jsx"></script>
   </body>
 </html>
