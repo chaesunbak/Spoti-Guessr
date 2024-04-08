@@ -17,7 +17,7 @@ const UserIcon = () => {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger className="m-1">
                 <Avatar>
                     <AvatarImage  />
                     <AvatarFallback>{user ? user.nickname[0] : ""}</AvatarFallback>

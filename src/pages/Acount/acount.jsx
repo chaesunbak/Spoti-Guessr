@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
 import { useNavigate } from 'react-router-dom';
 
-export default function Profile() {
+export default function Acount() {
     const user = useAuthStore((state) => state.user);
     const navigate = useNavigate();
 

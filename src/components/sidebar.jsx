@@ -9,6 +9,8 @@ export default function SideBar() {
             <Link to="/"><h1 className="font-sans text-2xl font-bold m-1">Spoti Guesser</h1></Link>
 
             <Separator />
+            <UserIcon/>
+            <Separator />
             <Command>
                 <CommandInput placeholder="검색어를 입력해주세요" />
                     <CommandList>
@@ -20,14 +22,12 @@ export default function SideBar() {
                     </CommandGroup>
                     <CommandSeparator />
                     <CommandGroup heading="데이터" className="text-sm">
-                        <CommandItem className="text-md"><Link to="/info">살펴보기</Link></CommandItem>
+                        <CommandItem className="text-md"><Link to="/data">살펴보기</Link></CommandItem>
                         <CommandItem className="text-md"><Link to="/add">추가하기</Link></CommandItem>
                     </CommandGroup>
                     <CommandSeparator />
                     <CommandGroup heading="설정" className="text-sm">
-                        <CommandItem className="text-md"><Link to="/profile">프로필</Link></CommandItem>
-                        <CommandItem className="text-md"><Link to="/settings">설정</Link></CommandItem>
-                        <UserIcon />
+                        <CommandItem className="text-md"><Link to="/acount">계정</Link></CommandItem>
                     </CommandGroup>
                 </CommandList>
             </Command>

@@ -2,18 +2,13 @@ import { useColor } from 'color-thief-react';
 import { Skeleton } from "@/components/ui/skeleton"
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVolumeHigh, faVolumeXmark, faPlay, faPause, faX } from '@fortawesome/free-solid-svg-icons';
-import MusicPlayBar from './musicplaybar';
+import { faVolumeHigh, faVolumeXmark, faPlay, faPause, faX, faE } from '@fortawesome/free-solid-svg-icons';
+import MusicPlayBar from '../../../components/musicplaybar';
 import Counter from './counter';
 import { Link, useParams } from 'react-router-dom';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-  } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, } from "@/components/ui/tooltip"
 
-export default function PlayCard({ gameData, onClick, isCheckingAnswer }) {
+export default function PlayCard({ gameData, onClick, isCheckingAnswer, winner }) {
     const params = useParams();
 
     const gamemode = params.gamemode;
@@ -111,7 +106,18 @@ export default function PlayCard({ gameData, onClick, isCheckingAnswer }) {
         }
     );
 
-        // artistLinks를 사용하여 렌더링
+    const getGameModeTitle = (mode) => {
+        switch (mode) {
+            case 'artists':
+                return '아티스트';
+            case 'albums':
+                return '앨범';
+            case 'tracks':
+                return '트랙';
+            default:
+                return null;
+        }
+    };
 
     return (
         <div className="flex flex-col justify-between rounded-xl p-3 md:p-4 lg:p-5 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer max-h-[22rem] md:max-h-none" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
@@ -120,15 +126,16 @@ export default function PlayCard({ gameData, onClick, isCheckingAnswer }) {
             </div>
             <div>
                 <div className="text-white font-bold text-base md:text-xl lg:text-3xl bg-black bg-opacity-20 size-fit">
+                    {gameData.explicit ? <FontAwesomeIcon icon={faE} className='mr-1' /> : null}
                     <TooltipProvider>
                         <Tooltip>
-                            <TooltipTrigger >
-                                <Link to={`/data/${gamemode}/${gameData.id}`} className='hover:underline'>
+                            <TooltipTrigger className='text-left hover:underline'>
+                                <Link to={`/data/${gamemode}/${gameData.id}`}>
                                     {gameData.name}
                                 </Link>
                             </TooltipTrigger>
                             <TooltipContent className="font-normal">
-                                <p>클릭 시 해당 {gamemode} 페이지로 이동합니다.</p>
+                                <p>클릭 시 해당 {getGameModeTitle(gamemode)} 페이지로 이동합니다.</p>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
@@ -140,8 +147,8 @@ export default function PlayCard({ gameData, onClick, isCheckingAnswer }) {
                 )}
             </div>
             {gameData.preview_url && ( <audio ref={audioRef} className='hidden'controls src={gameData.preview_url} onTimeUpdate={updateProgress}/>)}
-            <div className='grid grid-cols-5 text-white text-xl my-2 md:my-3 lg:my-4'>
-                {isCheckingAnswer && (<Counter className="col-start-1 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto" to={gameData.popularity}/>)}
+            <div className='grid grid-cols-5 text-white text-xl md:text-2xl lg:text-3xl my-2 md:my-3 lg:my-4'>
+                {isCheckingAnswer && (<Counter className="col-start-1 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto" to={gameData.popularity} winner={winner}/>)}
                 <FontAwesomeIcon className='col-start-3 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto' icon={gameData.preview_url === null ? faX : (isPlaying ? faPause : faPlay)}  onClick={(e) => {e.stopPropagation(); togglePlay();}}/>
                 <FontAwesomeIcon className="col-start-5 aspect-square rounded hover:bg-black/20 p-2 md:p-3 lg:p-4 m-auto" icon={isMuted ? faVolumeXmark : faVolumeHigh} onClick={(e) => {e.stopPropagation(); toggleMute();}}/>
             </div>

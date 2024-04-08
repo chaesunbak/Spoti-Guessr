@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddDataForm from "./AddDataForm";
 import UpdateDataForm from "./UpdataDataForm";
 
-export default function Admin() {
+export default function AddData() {
     const user = useAuthStore((state) => state.user);
 
     return (

@@ -1,22 +1,20 @@
 import { collection, query, where, getDocs, orderBy, limit } from "firebase/firestore";
 import { useParams } from "react-router-dom";
-import PlayCard from "../../../components/playcard";
+import PlayCard from "./playcard";
 import { db } from '../../../firebase/firebase';
 import getRandomNumber from "../../../utils/getRandomNumber";
 import { useState, useEffect } from "react";
-import useShowToast from '../../../hooks/useShowToast';
 import setDelay from '../../../utils/setDelay';
-import SpotifyLogo from '../../../assets/Spotify_Logo_RGB_Green.png';
-import SpotifyIcon from '../../../assets/Spotify_Icon_RGB_Green.png'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fa1 } from "@fortawesome/free-solid-svg-icons";
+import { useSearchParams } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast"
 
 export default function GamePlay() {
     const [gameData, setGameData] = useState([{},{}]); /* gameData1과 gameData2를 배열에 저장 */
     const [round, setRound] = useState(1); /* 게임 라운드, 시작시 1 게임진행시마다 1증가 */
     const [gameLog, setGameLog] = useState([]);
     const [isCheckingAnswer, setIsCheckingAnswer] = useState(false);
-    const showToast = useShowToast();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { toast } = useToast()
     const params = useParams();
 
     const gamemode = params.gamemode;
@@ -35,99 +33,91 @@ export default function GamePlay() {
         }
     };
 
-    async function getRandomDataFromAll() {
-        const collectionRef = params.gamemode; /* artsits, albums, tracks 중 1 */
+    async function getRandomDataFromAll(toast) {
+        const gamemode = params.gamemode;
         const randomNum = getRandomNumber(0, 9999);
 
-        let found = false;
-        let attempt = 0;
+        const randomNum2 = Math.floor(Math.random() * 3);
+        const values = ["randomNum1", "randomNum3", "randomNum2"];
+        let randomNumIndex = values[randomNum2];
 
-        console.log(`${round}번째 라운드 입니다.`)
-        console.log(`랜덤한 숫자는 ${randomNum}`);
 
-        while (!found) {
-            try {
-                console.log(`${attempt}번째 시도 입니다.`)
-                let querySnapshot;
-                if (attempt % 2 === 0) {
-                    const q1 = query(collection(db, collectionRef), where("randomNum1", "<=", randomNum), orderBy("randomNum1", 'desc'), limit(1));
-                    querySnapshot = await getDocs(q1);
-                } else {
-                    const q2 = query(collection(db, collectionRef), where("randomNum1", ">=", randomNum), orderBy("randomNum1", 'asc'), limit(1));
-                    querySnapshot = await getDocs(q2);
-                }
+        let querySnapshot;
+        try {
+            const q1 = query(collection(db, gamemode), where(randomNumIndex, ">=", randomNum), orderBy(randomNumIndex, 'asc'), limit(1));
+            querySnapshot = await getDocs(q1)
 
-                if (!querySnapshot.empty) {
-                    found = true;
-                    let dataObj;
-                    querySnapshot.forEach((doc) => {
-                        dataObj = doc.data();
-                    });
-                    return dataObj;
-                }
-                attempt++;
+            if(querySnapshot.empty) {
+                const q2 = query(collection(db, gamemode), where(randomNumIndex, "<=", randomNum), orderBy(randomNumIndex, 'desc'), limit(1));
+                querySnapshot = await getDocs(q2);
+            }
+
+            if (!querySnapshot.empty) {
+                const doc = querySnapshot.docs[0];
+                return doc.data();
+            }
             } catch (error) {
-                showToast(error, error.message);
-                break;
+                toast({
+                    title: '❗ 음..뭔가 잘못되었습니다.',
+                    description: error.message,
+                });
             }
         }
-    }
 
-    async function getRandomDataFromGenre() {
-        const collectionRef = params.gamemode; /* artsits, albums, tracks 중 1 */
-        let randomNum = getRandomNumber(0, 9999);
+    async function getRandomDataFromGenre(toast) {
+        const gamemode = params.gamemode;
+        const genre = params.genre;
+        const randomNum = getRandomNumber(0, 9999);
 
-        let found = false;
-        let attempt = 0;
+        const randomNum2 = Math.floor(Math.random() * 3);
+        const values = ["randomNum1", "randomNum3", "randomNum2"];
+        let randomNumIndex = values[randomNum2];
 
-        while (!found) {
-            try {
+        let querySnapshot;
 
-                let querySnapshot;
-                if (attempt % 2 === 0) {
-                    const q1 = query(collection(db, collectionRef), where("genres", "array-contains", genre), where("randomNum1", "<=", randomNum), orderBy("randomNum1", 'desc'), limit(1));
-                    querySnapshot = await getDocs(q1);
-                } else {
-                    const q2 = query(collection(db, collectionRef), where("genres", "array-contains", genre), where("randomNum1", ">=", randomNum), orderBy("randomNum1", 'asc'), limit(1));
-                    querySnapshot = await getDocs(q2);
-                }
+        try {
+            const q1 = query(collection(db, gamemode), where("genres", "array-contains", genre), where(randomNumIndex, ">=", randomNum), orderBy(randomNumIndex, 'asc'), limit(1));
+            querySnapshot = await getDocs(q1);
 
-                if (!querySnapshot.empty) {
-                    found = true;
-                    let dataObj;
-                    querySnapshot.forEach((doc) => {
-                        dataObj = doc.data();
-                        console.log(dataObj);
-                    });
-                    return dataObj;
-                }
-                attempt++;
+            if(querySnapshot.empty) {
+                const q2 = query(collection(db, gamemode), where("genres", "array-contains", genre), where(randomNumIndex, "<=", randomNum), orderBy(randomNumIndex, 'desc'), limit(1));
+                querySnapshot = await getDocs(q2);
+            }
+
+            if (!querySnapshot.empty) {
+                const doc = querySnapshot.docs[0];
+                return doc.data();
+            }
             } catch (error) {
-                showToast(error, error.message);
-                break;
+                toast({
+                    title: '❗ 음..뭔가 잘못되었습니다.',
+                    description: error.message,
+                });
             }
         }
-    }
 
-    async function getTwoRandomData() {
-
+    async function getTwoRandomData(toast) {
+        let dataObj1, dataObj2;
+    
         if (genre == "all") {
-            const dataObj1 = await getRandomDataFromAll();
-            const dataObj2 = await getRandomDataFromAll();
-            setGameData([dataObj1, dataObj2]);
+            dataObj1 = await getRandomDataFromAll(toast);
+            do {
+                dataObj2 = await getRandomDataFromAll(toast);
+            } while (dataObj1.id === dataObj2.id);
+        } else {
+            dataObj1 = await getRandomDataFromGenre(toast);
+            do {
+                dataObj2 = await getRandomDataFromGenre(toast);
+            } while (dataObj1.id === dataObj2.id);
         }
-        else  {
-            const dataObj1 = await getRandomDataFromGenre();
-            const dataObj2 = await getRandomDataFromGenre();
-            setGameData([dataObj1, dataObj2]);
-        }
-
+    
+        setGameData([dataObj1, dataObj2]);
     }
+
     useEffect(() => {
-        getTwoRandomData();
+        getTwoRandomData(toast);
     },[round])
 
-    /* 인기도 같은 경우 로직 추가할것 */
     async function checkAnswer(selectedIndex) {
         setIsCheckingAnswer(true);
         await setDelay(3500);
@@ -152,7 +142,7 @@ export default function GamePlay() {
       } else {
         break;
       }
-    }
+    }   
 
     return (
         <section id={params.gamemode} className="h-screen flex flex-col p-2 md:p-3 lg:p-4">
@@ -170,10 +160,15 @@ export default function GamePlay() {
                 </div>
             </div>
             <div className="flex h-full gap-2 md:gap-4 lg:gap-6 xl:gap-8">
-                {gameData.map((data, index) => (
+            {gameData.map((data, index) => {
+
+                const isWinner = gameData[0].popularity === gameData[1].popularity ? true : gameData[0].popularity > gameData[1].popularity ? (index === 0) : (index === 1);
+
+                return (
                     <PlayCard
                         key={index}
                         gameData={data}
+                        winner={isWinner} // 여기에서 계산된 winner 값을 전달
                         onClick={() => {
                             if (!isCheckingAnswer) {
                                 checkAnswer(index);
@@ -181,7 +176,8 @@ export default function GamePlay() {
                         }}
                         isCheckingAnswer={isCheckingAnswer}
                     />
-                ))}
+                );
+            })}
             </div>
         </section>
     );

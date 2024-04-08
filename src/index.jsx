@@ -5,12 +5,13 @@ import Layout from './components/layout';
 import Home from './pages/Home/home';
 import GameMenu from './pages/GameMenu/gamemenu';
 import GamePlay from './pages/GameMenu/GamePlay/gameplay';
-import Profile from './pages/Profile/profile';
-import Settings from './pages/Settings/settings';
 import Auth from './pages/Auth/auth';
 import "./index.css";
-import Admin from './pages/Admin/admin';
-import Data from './pages/Data/data';
+import DataHome from './pages/Data/datahome';
+import DataList from './pages/Data/DataList/datalist';
+import SingleData from './pages/Data/DataList/SingleData/singledata';
+import AddData from './pages/Add/adddata';
+import Acount from './pages/Acount/acount';
 
 function App() {
 
@@ -21,10 +22,11 @@ function App() {
           <Route index element={<Home/>}/>
           <Route path='game/:gamemode' element={<GameMenu/>}/>
           <Route path='game/:gamemode/:genre' element={<GamePlay/>}/>
-          <Route path='data/:gamemode/:id' element={<Data/>}/>
-          <Route path='add' element={<Admin/>}/>
-          <Route path='profile' element={<Profile/>}/>
-          <Route path='settings' element={<Settings/>}/>
+          <Route path='data' element={<DataHome/>}/>
+          <Route path='data/:gamemode' element={<DataList/>}/>
+          <Route path='data/:gamemode/:id' element={<SingleData/>}/>
+          <Route path='add' element={<AddData/>}/>
+          <Route path='acount' element={<Acount/>}/>
           <Route path='auth' element={<Auth/>}/>
         </Route>
       </Routes>
