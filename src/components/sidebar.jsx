@@ -24,7 +24,6 @@ export default function SideBar() {
                     </CommandGroup>
                     <CommandSeparator />
                     <CommandGroup heading="데이터" className="text-sm">
-                        <CommandItem className="text-md"><Link to="/data">살펴보기</Link></CommandItem>
                         <CommandItem className="text-md"><Link to="/add">추가하기</Link></CommandItem>
                     </CommandGroup>
                     <CommandSeparator />

@@ -22,8 +22,6 @@ function App() {
           <Route index element={<Home/>}/>
           <Route path='game/:gamemode' element={<GameMenu/>}/>
           <Route path='game/:gamemode/:genre' element={<GamePlay/>}/>
-          <Route path='data' element={<DataHome/>}/>
-          <Route path='data/:gamemode' element={<DataList/>}/>
           <Route path='data/:gamemode/:id' element={<SingleData/>}/>
           <Route path='add' element={<AddData/>}/>
           <Route path='acount' element={<Acount/>}/>
