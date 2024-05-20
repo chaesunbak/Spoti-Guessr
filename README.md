@@ -9,18 +9,18 @@ https://spotify-3e40e.web.app/
 https://doorstar.notion.site/c713594766be4a90b9443efe0eaf1289?pvs=4
 
 ## 사용 기술
-React & React-Router : SPA \n
-Zustand : 전역상태관리 \n
-Firebase Firesotre : Server \n
-Firebase Auth : Auth \n
-Firebase Hositng : Hosting \n
+React & React-Router : SPA  
+Zustand : 전역상태관리  
+Firebase Firesotre : Server  
+Firebase Auth : Auth  
+Firebase Hositng : Hosting  
 
-기타 라이브러리 \n
-Shadcn/ui : Headless Components \n
-Tailwind CSS : Stlyling \n
-zod, react-hook-form, TypeScript(일부) : Form Validation \n
-color-thief-react : 이미지 주요 색깔 추출 \n
-framer-motion : 숫자 올라가는 애니메이션 \n
+기타 라이브러리  
+Shadcn/ui : Headless Components  
+Tailwind CSS : Stlyling  
+zod, react-hook-form, TypeScript(일부) : Form Validation  
+color-thief-react : 이미지 주요 색깔 추출  
+framer-motion : 숫자 올라가는 애니메이션  
 
  
 ## 확인된 버그 리스트
