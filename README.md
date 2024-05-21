@@ -3,7 +3,7 @@
 스포티파이 API를 활용한 음악 인기도 맞추기 게임 사이트
 
 👇 지금 플레이 하기!
-https://spotify-3e40e.web.app/
+https://spoti-guessr.chaesunbak.com/
 
 스포티-게서를 만들면서...
 https://doorstar.notion.site/c713594766be4a90b9443efe0eaf1289?pvs=4
