@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 const UserIcon = () => {
     const user = useAuthStore((state) => state.user);
-    const { handleLogOut } = useLogOut();
+    const { logOut } = useLogOut();
 
     return (
         <DropdownMenu>
@@ -30,7 +30,7 @@ const UserIcon = () => {
                     <Link to="/acount">계정</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                {!user ? (<DropdownMenuItem><Link to='/auth'>로그인</Link></DropdownMenuItem>): (<DropdownMenuItem className="text-red-500" onClick={handleLogOut}>로그아웃</DropdownMenuItem>)}
+                {!user ? (<DropdownMenuItem><Link to='/auth'>로그인</Link></DropdownMenuItem>): (<DropdownMenuItem className="text-red-500" onClick={logOut}>로그아웃</DropdownMenuItem>)}
             </DropdownMenuContent>
         </DropdownMenu>
     )

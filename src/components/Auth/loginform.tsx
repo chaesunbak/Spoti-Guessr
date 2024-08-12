@@ -1,20 +1,17 @@
 import { useForm } from "react-hook-form"
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
-import GoogleAuth from "./googleauth.jsx";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import useSignIn from '../../hooks/useSignIn';
-import { useToast } from "@/components/ui/use-toast"
+import useLogIn from '../../hooks/useLogIn';
+import GoogleAuth from "./googleauth";
 
-export default function SignIn() {
+export default function LogInForm() {
 
-    const { login , loggingin, error} = useSignIn();
-    const { toast } = useToast();
-
+    const { loading, error, logIn} = useLogIn();
 
     const formSchema = z.object({
         email: z.string().email({ message: "올바르지 않은 이메일입니다." }),
@@ -29,21 +26,6 @@ export default function SignIn() {
         },
       });
 
-    const handleSubmit = async (inputs) => {
-       try {
-            await login(inputs, toast);
-            toast({
-                title: '✅ 환영합니다',
-            })
-       } catch (error) {
-            toast({
-                title: '❗음..뭔가 잘못됬습니다.',
-                description: error.message,
-            })
-       }
-        
-    }
-
     return (
         <Card className="flex flex-col justify-between">
             <CardHeader>
@@ -56,7 +38,7 @@ export default function SignIn() {
                 </div>
                 <Separator />
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+                    <form onSubmit={form.handleSubmit(logIn)} className="space-y-8">
                         <FormField
                             control={form.control}
                             name="email"
@@ -83,7 +65,7 @@ export default function SignIn() {
                                 </FormItem>
                             }}
                         />
-                        <Button type="submit" className="w-full my-2" disabled={loggingin}>로그인</Button>
+                        <Button type="submit" className="w-full my-2" disabled={loading}>로그인</Button>
                     </form>
                 </Form>
             </CardContent>

@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import useSignUpWithEmailAndPassword from "../../hooks/useSignUpWithEmailAndPassword";
-import GoogleAuth from "./googleauth.jsx";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -10,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast"
 import { useNavigate } from "react-router-dom";
+import GoogleAuth from "./googleauth";
 
 const formSchema = z
       .object({
@@ -22,8 +22,8 @@ const formSchema = z
           path: ["passwordConfirm"],
       });
 
-export default function SignUp() {
-    const { loading, error, signup } = useSignUpWithEmailAndPassword();
+export default function SignUpForm() {
+    const { loading, error, signUp } = useSignUpWithEmailAndPassword();
     const { toast } = useToast()
     const navigate = useNavigate();
 
@@ -35,22 +35,6 @@ export default function SignUp() {
           passwordConfirm:"",
         },
       });
-
-    const handleSubmit = async (inputs) => {
-        try {
-            await signup(inputs);
-            toast({
-                title: '✅ 환영합니다',
-            })
-            navigate(-1);
-        } catch (error) { 
-            toast({
-                title: '❗음..뭔가 잘못됬습니다.',
-                description: error.message,
-            })
-        }
-        
-    }
 
     return (
         <Card className="flex flex-col justify-between">
@@ -64,7 +48,7 @@ export default function SignUp() {
                 </div>
                 <Separator />
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+                    <form onSubmit={form.handleSubmit(signUp)} className="space-y-8">
                         <FormField
                             control={form.control}
                             name="email"

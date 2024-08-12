@@ -1,6 +1,6 @@
 import { useColor } from 'color-thief-react';
 import { Skeleton } from "@/components/ui/skeleton"
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVolumeHigh, faVolumeXmark, faPlay, faPause, faX, faE } from '@fortawesome/free-solid-svg-icons';
 import MusicPlayBar from '../../../components/musicplaybar';
@@ -122,7 +122,7 @@ export default function PlayCard({ gameData, onClick, isCheckingAnswer, winner }
     return (
         <div className="flex flex-col justify-between rounded-xl p-3 md:p-4 lg:p-5 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer max-h-[22rem] md:max-h-none" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
             <div className='w-full max-h-96 aspect-square relative flex items-center justify-center'>
-                <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-full max-w-full rounded-md shadow-md md:shadow-lg hover:scale-105" src={gameData.image} alt={gameData.name} />
+                <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-full max-w-full rounded-md shadow-md md:shadow-lg hover:scale-105 transition" src={gameData.image} alt={gameData.name} />
             </div>
             <div>
                 <div className="text-white font-bold text-base md:text-xl lg:text-3xl bg-black bg-opacity-20 size-fit">

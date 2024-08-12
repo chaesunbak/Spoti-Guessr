@@ -1,19 +1,19 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SignIn from '../../components/Auth/signin';
-import SignUp from '../../components/Auth/signup';
+import LogInForm from '../../components/Auth/loginform';
+import SignUpForm from '../../components/Auth/signupform';
 
 export default function Auth() {
     return (
         <section className=" p-2 md:p-3 lg:p-4">
-            <Tabs defaultValue="signin" className="w-[400px] m-auto">
-                <TabsContent value="signin">
-                    <SignIn/>
+            <Tabs defaultValue="login" className="w-[400px] m-auto">
+                <TabsContent value="login">
+                    <LogInForm/>
                 </TabsContent>
                 <TabsContent value="signup">
-                    <SignUp/>
+                    <SignUpForm/>
                 </TabsContent>
                 <TabsList className="w-[400px] flex">
-                    <TabsTrigger value="signin">로그인</TabsTrigger>
+                    <TabsTrigger value="login">로그인</TabsTrigger>
                     <TabsTrigger value="signup">계정 만들기</TabsTrigger>
                 </TabsList>
             </Tabs>

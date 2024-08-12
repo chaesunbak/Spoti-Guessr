@@ -4,28 +4,34 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase';
 
 const useDeleteAccount = () => {
-	const [isDeleting, setIsDeleting] = useState(false);
-
+	const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const authUser = useAuthStore((state) => state.user);
 	const setAuthUser = useAuthStore((state) => state.setUser);
 
     const deleteAccount = async () => {
-		if (isDeleting || !authUser) return;
-		setIsDeleting(true);
+		if (loading || !authUser) return;
+
+		// 사용자에게 삭제를 확인합니다.
+		const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
+		if (!isConfirmed) return;
+
+		setLoading(true);
+        setError(null);
 
 		try {
 			await deleteDoc(doc(db, "users", authUser.uid));
-			localStorage.removeItem("user-info", JSON.stringify(updatedUser));
+			localStorage.removeItem("user-info");
 			setAuthUser(null);
-            console.log("계정 삭제 성공")
-		} catch (error) {
-			console.log("계정 삭제 실패". error.message);
-		} finally {
-            setIsDeleting(false);
+            console.log("계정 삭제 성공");
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
         }
 	};
 
-	return { deleteAccount, isDeleting };
+	return { deleteAccount, loading, error };
 }
 
 export default useDeleteAccount;
