@@ -1,8 +1,33 @@
-# React + Vite
+# 스포티게서
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+스포티파이 API를 활용한 음악 인기도 맞추기 게임 사이트
 
-Currently, two official plugins are available:
+👇 지금 플레이 하기!
+https://spoti-guessr.chaesunbak.com/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+스포티-게서를 만들면서...
+https://doorstar.notion.site/c713594766be4a90b9443efe0eaf1289?pvs=4
+
+## 사용 기술
+React & React-Router : SPA  
+Zustand : 전역상태관리  
+Firebase Firesotre : Server  
+Firebase Auth : Auth  
+Firebase Hositng : Hosting  
+
+기타 라이브러리  
+Shadcn/ui : Headless Components  
+Tailwind CSS : Stlyling  
+zod, react-hook-form, TypeScript(일부) : Form Validation  
+color-thief-react : 이미지 주요 색깔 추출  
+framer-motion : 숫자 올라가는 애니메이션  
+
+ 
+## 확인된 버그 리스트
+- 마우스를 올려놓은 상태에서 카드 변경시 음악 자동재생x
+- 인기도 0인 요소 존재(스포티파이 API문제일 가능성 있음)
+
+## 추가예정(?) 기능
+- 게임기록 로그 시스템
+- 계정 래벨 시스템
+- 게임 업적 시스템
