@@ -51,8 +51,8 @@ export default function Home() {
                     <CardTitle>스포티 게서로 음악을 새롭게 즐겨보세요.</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p>지금 스포티파이에서 어떤 곡이 더 인기있을까요?</p>
-                    <p>모든 음악 정보는 스포티파이를 통해 제공됩니다.</p>
+                    <p>지금 Spotify에서 어떤 곡이 더 인기있을까요?</p>
+                    <p>모든 음악 정보는 <a className="text-green-700 underline"href="https://developer.spotify.com/">Spotify</a>를 통해 제공됩니다.</p>
                     <p>무료 서버를 사용하기 때문에 사용량 제한이 있습니다. 사용량이 초과한 경우 다음에 만나요!</p>
                 </CardContent>
             </Card>
