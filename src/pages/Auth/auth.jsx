@@ -4,8 +4,8 @@ import SignUpForm from '../../components/Auth/signupform';
 
 export default function Auth() {
     return (
-        <section className=" p-2 md:p-3 lg:p-4">
-            <Tabs defaultValue="login" className="w-[400px] m-auto">
+        <section className="flex justify-center items-center p-2 md:p-3 lg:p-4 min-h-screen">
+            <Tabs defaultValue="login" className="w-[400px]">
                 <TabsContent value="login">
                     <LogInForm/>
                 </TabsContent>
