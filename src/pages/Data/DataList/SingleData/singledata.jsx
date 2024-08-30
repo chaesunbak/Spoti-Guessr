@@ -3,6 +3,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../../../../firebase/firebase";
 import PlayCard from "../../../GameMenu/GamePlay/playcard";
+import DetailDataCard from "../../../../components/detaildatacard";
+import PlayCardSkeletion from "../../../../components/playcardskeletion";
 
 const getGameModeTitle = (mode) => {
     switch (mode) {
@@ -60,13 +62,7 @@ export default function SingleData() {
                 <h2 className='font-bold text-neutral-700 text-3xl @md:text-5xl @lg:text-6xl mb-2'>
                     {getGameModeTitle(gamemode)} 정보
                 </h2>
-                <div className="flex flex-col md:grid md:grid-cols-3">
-                    <div className='w-full max-h-96 aspect-square relative flex items-center justify-center'>
-                        <div className="animate-pulse w-full h-full bg-neutral-200 rounded-md"></div>
-                    </div>
-                    <div className='animate-pulse w-full h-8 bg-neutral-200 rounded-md'></div>
-                    <div className='animate-pulse w-full h-8 bg-neutral-200 rounded-md'></div>
-                </div>
+                <PlayCardSkeletion />
             </section>
         );
     }
@@ -78,12 +74,7 @@ export default function SingleData() {
             </h2>
             <div className="flex flex-col md:grid md:grid-cols-3">
                 <PlayCard gameData={data} />
-                ID : {data?.id}
-                장르 : {data?.genres}
-                릴리즈 일자 : {data?.release_date}
-                업데이트 일자 :{data?.updatedAt}
-                explicit : {data?.explicit}
-                <a href={data?.spotifyLink}>스포티파이에서 보기</a>
+                <DetailDataCard gameData={data} />
             </div>
         </section>
     );
