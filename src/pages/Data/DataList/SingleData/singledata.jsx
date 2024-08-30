@@ -74,7 +74,9 @@ export default function SingleData() {
             </h2>
             <div className="flex flex-col md:grid md:grid-cols-3">
                 <PlayCard gameData={data} />
-                <DetailDataCard gameData={data} />
+                <div className="md:col-span-2">
+                    <DetailDataCard gameData={data} />
+                </div>
             </div>
         </section>
     );
