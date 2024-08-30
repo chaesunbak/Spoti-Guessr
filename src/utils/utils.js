@@ -1,7 +1,7 @@
 export function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
-};
+}
 
 export function convertToKorean(mode) {
     switch (mode) {
@@ -14,4 +14,4 @@ export function convertToKorean(mode) {
         default:
             return null;
     }
-};
+}
