@@ -6,8 +6,7 @@ import PlayCard from "../../../GameMenu/GamePlay/playcard";
 import DetailDataCard from "../../../../components/detaildatacard";
 import PlayCardSkeletion from "../../../../components/playcardskeletion";
 import { convertToKorean } from "../../../../utils/utils";
-
-
+import CommentSection from "../../../../components/comments/commentsection";
 
 export default function SingleData() {
     const [loading, setLoading] = useState(false);
@@ -49,7 +48,7 @@ export default function SingleData() {
 
     if (loading) {
         return (
-            <section className="@container p-2 md:p-3 lg:p-4">
+            <section className="@container p-2 md:p-3 lg:p-4 ">
                 <h2 className='font-bold text-neutral-700 text-3xl @md:text-5xl @lg:text-6xl mb-2'>
                     {convertToKorean(gamemode)} 정보
                 </h2>
@@ -59,7 +58,7 @@ export default function SingleData() {
     }
 
     return (
-        <section className="@container p-2 md:p-3 lg:p-4">
+        <section className="@container p-2 md:p-3 lg:p-4 overflow-auto">
             <h2 className='font-bold text-neutral-700 text-3xl @md:text-5xl @lg:text-6xl mb-2'>
                 {convertToKorean(gamemode)} 정보
             </h2>
@@ -69,6 +68,7 @@ export default function SingleData() {
                     <DetailDataCard gameData={data} />
                 </div>
             </div>
+            <CommentSection />
         </section>
     );
 }

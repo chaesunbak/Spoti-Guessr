@@ -7,7 +7,6 @@ export default function DetailDataCard({gameData}){
     return (
         <div className="flex flex-col min-h-[22rem] rounded-xl bg-slate-500 text-white p-4">
             {gameData?.id && <p>스포티파이 ID : {gameData.id}</p>}
-            {gameData?.type && <p>유형 : {gameData.type}</p>}
             {gameData?.album_type && <p>앨범 유형 : {gameData.album_type}</p>}
             {gameData?.name && <p>이름 : {gameData.name}</p>}
             {gameData?.artist1_id && <p>아티스트1 ID : {gameData.artist1_id}</p>}
