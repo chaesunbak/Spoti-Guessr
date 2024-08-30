@@ -39,6 +39,7 @@ export default function AddCommentForm() {
       username: `${getRandomNickname()}`,
       password: "",
       comment: "",
+      like: 0,
     },
   })
 
@@ -59,35 +60,35 @@ export default function AddCommentForm() {
   }
 
       return (
-        <Form className="p-4 md:p-8 lg:p-12" {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center">
+            <div>
               <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>닉네임</FormLabel>
-                    <FormControl>
-                      <Input placeholder="shadcn" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>비밀번호</FormLabel>
-                    <FormControl>
-                      <Input placeholder="shadcn" type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>닉네임</FormLabel>
+                      <FormControl>
+                        <Input placeholder="shadcn" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>비밀번호</FormLabel>
+                      <FormControl>
+                        <Input placeholder="shadcn" type="password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
             </div>
             <FormField
               control={form.control}
