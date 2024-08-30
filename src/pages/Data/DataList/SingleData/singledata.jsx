@@ -5,19 +5,9 @@ import { db } from "../../../../firebase/firebase";
 import PlayCard from "../../../GameMenu/GamePlay/playcard";
 import DetailDataCard from "../../../../components/detaildatacard";
 import PlayCardSkeletion from "../../../../components/playcardskeletion";
+import { convertToKorean } from "../../../../utils/utils";
 
-const getGameModeTitle = (mode) => {
-    switch (mode) {
-        case 'artists':
-            return '아티스트';
-        case 'albums':
-            return '앨범';
-        case 'tracks':
-            return '트랙';
-        default:
-            return null;
-    }
-};
+
 
 export default function SingleData() {
     const [loading, setLoading] = useState(false);
@@ -61,7 +51,7 @@ export default function SingleData() {
         return (
             <section className="@container p-2 md:p-3 lg:p-4">
                 <h2 className='font-bold text-neutral-700 text-3xl @md:text-5xl @lg:text-6xl mb-2'>
-                    {getGameModeTitle(gamemode)} 정보
+                    {convertToKorean(gamemode)} 정보
                 </h2>
                 <PlayCardSkeletion />
             </section>
@@ -71,7 +61,7 @@ export default function SingleData() {
     return (
         <section className="@container p-2 md:p-3 lg:p-4">
             <h2 className='font-bold text-neutral-700 text-3xl @md:text-5xl @lg:text-6xl mb-2'>
-                {getGameModeTitle(gamemode)} 정보
+                {convertToKorean(gamemode)} 정보
             </h2>
             <div className="flex flex-col md:grid md:grid-cols-3">
                 <PlayCard gameData={data} />

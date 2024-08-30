@@ -7,6 +7,7 @@ import MusicPlayBar from '../../../components/musicplaybar';
 import Counter from './counter';
 import { Link, useParams } from 'react-router-dom';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, } from "@/components/ui/tooltip"
+import { convertToKorean } from '../../../utils/utils';
 
 export default function PlayCard({ gameData, onClick, isCheckingAnswer, winner }) {
     const params = useParams();
@@ -106,19 +107,6 @@ export default function PlayCard({ gameData, onClick, isCheckingAnswer, winner }
         }
     );
 
-    const getGameModeTitle = (mode) => {
-        switch (mode) {
-            case 'artists':
-                return '아티스트';
-            case 'albums':
-                return '앨범';
-            case 'tracks':
-                return '트랙';
-            default:
-                return null;
-        }
-    };
-
     return (
         <div className="flex flex-col justify-between rounded-xl p-3 md:p-4 lg:p-5 drop-shadow-md hover:backdrop-opacity-90 cursor-pointer max-h-[22rem] md:max-h-none" style={bgStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={onClick}>
             <div className='w-full max-h-96 aspect-square relative flex items-center justify-center'>
@@ -135,7 +123,7 @@ export default function PlayCard({ gameData, onClick, isCheckingAnswer, winner }
                                 </Link>
                             </TooltipTrigger>
                             <TooltipContent className="font-normal">
-                                <p>클릭 시 해당 {getGameModeTitle(gamemode)} 페이지로 이동합니다.</p>
+                                <p>클릭 시 해당 {convertToKorean(gamemode)} 페이지로 이동합니다.</p>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
