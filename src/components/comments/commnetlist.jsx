@@ -10,6 +10,7 @@ export default function CommentList() {
     const gamemode = params.gamemode;
     const id = params.id;
     const [comments, setComments] = useState([]);
+    const user = JSON.parse(localStorage.getItem("user-info"));
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -26,11 +27,16 @@ export default function CommentList() {
 
     async function handleDelete(commentid, password){
 
-        const input = prompt("비밀번호를 입력해주세요");
+        if(confirm("정말 삭제하시겠습니까?") === false){
+            return;
+        }
+
+        const input = user ? user.uid : prompt("비밀번호를 입력해주세요");
         if(input !== password){
             alert("비밀번호가 틀렸습니다.");
             return;
         }
+
         try{
             await deleteDoc(doc(db, gamemode, id, "comments", commentid));
             setComments(comments.filter(comment => comment.id !== commentid));

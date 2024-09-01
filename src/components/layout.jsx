@@ -14,7 +14,7 @@ function Layout() {
   if(isMobile)
   return (
     <>
-      <div className="flex justify-between p-2">
+      <div className="flex justify-between">
         <Link to="/"><h1 className="font-sans text-2xl font-bold m-1">Spoti Guesser</h1></Link>
         <UserIcon/>
         <MobileMenu/>
@@ -32,10 +32,10 @@ function Layout() {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={80} minSize={70}>
-          <ScrollArea>
+          <ScrollArea className="h-full max-h-screen">
             <Outlet />
-            <Toaster />
           </ScrollArea>
+          <Toaster />
         </ResizablePanel>
       </ResizablePanelGroup>
   )

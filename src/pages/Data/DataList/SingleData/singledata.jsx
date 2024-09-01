@@ -58,17 +58,18 @@ export default function SingleData() {
     }
 
     return (
-        <section className="@container p-2 md:p-3 lg:p-4 overflow-auto">
+        <section className="@container p-2 md:p-3 lg:p-4 min-h-screen overflow-scroll">
             <h2 className='font-bold text-neutral-700 text-3xl @md:text-5xl @lg:text-6xl mb-2'>
                 {convertToKorean(gamemode)} 정보
             </h2>
-            <div className="flex flex-col md:grid md:grid-cols-3">
+            <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 lg:gap-4">
                 <PlayCard gameData={data} />
-                <div className="mt-2 md:mt-0 md:ml-4 md:col-span-2">
-                    <DetailDataCard gameData={data} />
-                </div>
+
+                <DetailDataCard gameData={data} />
+
+                <CommentSection />
             </div>
-            <CommentSection />
+
         </section>
     );
 }

@@ -53,6 +53,7 @@ export default function AddCommentForm() {
         createdAt: new Date().toISOString(),
       });
       console.log("Document successfully written!");
+      window.location.reload();
     } catch (e) {
       console.error("Error writing document: ", e);
     }
@@ -77,7 +78,10 @@ export default function AddCommentForm() {
                     <FormItem>
                       <FormLabel>닉네임</FormLabel>
                       <FormControl>
-                        <Input placeholder="shadcn" {...field} />
+                        <Input placeholder="shadcn"
+                          {...field}
+                          className="border rounded px-3 py-2 w-full sm:w-1/2"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -90,7 +94,12 @@ export default function AddCommentForm() {
                     <FormItem>
                       <FormLabel>비밀번호</FormLabel>
                       <FormControl>
-                        <Input placeholder="shadcn" type="password" {...field} />
+                        <Input
+                          placeholder="shadcn"
+                          type="password"
+                          {...field}
+                          className="border rounded px-3 py-2 w-full sm:w-1/2"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -106,13 +115,17 @@ export default function AddCommentForm() {
                 <FormItem>
                   <FormLabel>댓글</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="댓글을 입력하세요" {...field} />
+                    <Textarea
+                      placeholder="댓글을 입력하세요"
+                      {...field}
+                      className="border rounded px-3 py-2 w-full resize-none"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">등록</Button>
+            <Button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-10 sm:w-auto">등록</Button>
           </form>
         </Form>
       );
