@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { collection, getDocs, doc, updateDoc, increment, deleteDoc } from "firebase/firestore"; 
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore"; 
 import { db } from "../../firebase/firebase"
 import { useParams } from "react-router-dom";
 import { formatDistanceToNow } from 'date-fns';
@@ -24,30 +24,6 @@ export default function CommentList() {
         fetchComments();
     }, [gamemode, id]);
 
-    return (
-        <div>
-            {comments
-                .sort((a, b) => a.createdAt - b.createdAt)
-                .map((comment) => (
-                    <Comment key={comment.id} comment={comment} gamemode={gamemode} id={id} />
-                ))}
-        </div>
-    );
-}
-
-function Comment({comment, gamemode, id}){
-
-    async function handleLike(commentid){
-        try{
-            const commentRef = doc(db, gamemode, id, "comments", commentid);
-            await updateDoc(commentRef, {
-                like: increment(1)
-            });
-        } catch(e){
-            console.log(e);
-        }
-    }
-
     async function handleDelete(commentid, password){
 
         const input = prompt("비밀번호를 입력해주세요");
@@ -57,10 +33,24 @@ function Comment({comment, gamemode, id}){
         }
         try{
             await deleteDoc(doc(db, gamemode, id, "comments", commentid));
+            setComments(comments.filter(comment => comment.id !== commentid));
         } catch(e){
             console.log(e);
         }
     }
+
+    return (
+        <div>
+            {comments
+                .sort((a, b) => a.createdAt - b.createdAt)
+                .map((comment) => (
+                    <Comment key={comment.id} comment={comment} handleDelete={handleDelete} />
+                ))}
+        </div>
+    );
+}
+
+function Comment({comment, handleDelete}){
 
     return(
         <div className="flex flex-col">
@@ -68,13 +58,11 @@ function Comment({comment, gamemode, id}){
                 <div className="font-bold">{comment.username}</div>
                 <div>{formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true, locale: ko })}</div>
 
-                <div>{comment.like}</div>
-
-                <div onClick={()=>handleLike(comment.id)} className="text-blue-500 hover:underline cursor-pointer">추천</div>
-                <div onClick={()=>handleDelete(commnet.id, comment.password)} className="text-red-500 hover:underline cursor-pointer">삭제</div>
+                <div onClick={()=>handleDelete(comment.id, comment.password)} className="text-red-500 hover:underline cursor-pointer border rounded px-1">삭제 🗑︎</div>
             </div>
 
-            <div>{comment.comment}</div>
+            <div className="text-sm">{comment.comment}</div>
+            <hr className="border-t border-gray-300" />
         </div>
     )
 }

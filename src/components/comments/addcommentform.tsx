@@ -33,13 +33,14 @@ export default function AddCommentForm() {
 
   const user = useAuthStore((state) => state.user);
 
+  console.log(user);
+
   const form = useForm<z.infer<typeof commentFormSchema>>({
     resolver: zodResolver(commentFormSchema),
     defaultValues: {
       username: `${getRandomNickname()}`,
       password: "",
       comment: "",
-      like: 0,
     },
   })
 
