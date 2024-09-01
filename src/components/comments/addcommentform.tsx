@@ -20,8 +20,8 @@ import { db } from  "@/firebase/firebase";
 import { useParams } from "react-router-dom";
 
 const commentFormSchema = z.object({
-  username: z.string().min(2).max(50),
-  password: z.string().min(2).max(50),
+  username: z.string().min(2).max(50).optional(),
+  password: z.string().min(2).max(50).optional(),
   comment: z.string().min(2).max(200),
 })
 
@@ -33,13 +33,11 @@ export default function AddCommentForm() {
 
   const user = useAuthStore((state) => state.user);
 
-  console.log(user);
-
   const form = useForm<z.infer<typeof commentFormSchema>>({
     resolver: zodResolver(commentFormSchema),
     defaultValues: {
-      username: `${getRandomNickname()}`,
-      password: "",
+      username: user ? user.nickname : `${getRandomNickname()}`,
+      password: user ? user.uid : "",
       comment: "",
     },
   })
@@ -64,7 +62,15 @@ export default function AddCommentForm() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center">
             <div>
-              <FormField
+              {user && (
+                <>
+                  <div className="font-bold text-sm">닉네임</div>
+                  <div className="text-sm">{user.nickname}</div>
+                </>
+              )}
+              {!user && (
+              <>
+                <FormField
                   control={form.control}
                   name="username"
                   render={({ field }) => (
@@ -90,6 +96,8 @@ export default function AddCommentForm() {
                     </FormItem>
                   )}
                 />
+              </>
+              )}
             </div>
             <FormField
               control={form.control}
