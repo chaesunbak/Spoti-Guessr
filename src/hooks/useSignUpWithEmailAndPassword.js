@@ -3,7 +3,7 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import useAuthStore from '../store/authStore';
-import getRandomNickname from '../utils/getRandomNickname';
+import { getRandomNickname } from '../lib/utils';
 import { useNavigate } from 'react-router-dom';
 
 const useSignUp = () => {

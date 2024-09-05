@@ -3,7 +3,7 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase/firebase';
 import useAuthStore from '../store/authStore';
-import { getRandomNickname } from '../utils/utils';
+import { getRandomNickname } from '../lib/utils';
 
 const useContinueWithGoogle = () => {
   const [loading, setLoading] = useState(false);
