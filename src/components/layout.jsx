@@ -5,7 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import SideBar from './sidebar';
 import { Toaster } from '@/components/ui/toaster';
 import MobileMenu from './mobilemenu';
-import UserIcon from './UserIcon/usericon';
+import UserIcon from './usericon';
 
 function Layout() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
