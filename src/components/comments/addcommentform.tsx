@@ -19,8 +19,7 @@ const commentFormSchema = z.object({
 
 export default function AddCommentForm() {
   const params = useParams();
-  const gamemode = params.gamemode;
-  const id = params.id;
+  const { gamemode, id } = params;
 
   const user = useAuthStore(state => state.user);
 
@@ -50,13 +49,13 @@ export default function AddCommentForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center">
+    <Form {...form} className="text-sm">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex">
         <div>
           {user && (
             <>
-              <div className="font-bold text-sm">닉네임</div>
-              <div className="text-sm">{user.nickname}</div>
+              <div className="font-medium">닉네임</div>
+              <div>{user.nickname}</div>
             </>
           )}
           {!user && (
@@ -66,9 +65,9 @@ export default function AddCommentForm() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>닉네임</FormLabel>
+                    <FormLabel className="font-medium">닉네임</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} className="border rounded px-3 py-2 w-full sm:w-1/2" />
+                      <Input placeholder="shadcn" {...field} className="border rounded p-1 w-full sm:w-1/2" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -79,13 +78,13 @@ export default function AddCommentForm() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>비밀번호</FormLabel>
+                    <FormLabel className="font-medium">비밀번호</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="shadcn"
                         type="password"
                         {...field}
-                        className="border rounded px-3 py-2 w-full sm:w-1/2"
+                        className="border rounded p-1 w-full sm:w-1/2"
                       />
                     </FormControl>
                     <FormMessage />
@@ -100,12 +99,12 @@ export default function AddCommentForm() {
           name="comment"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>댓글</FormLabel>
+              <FormLabel className="font-medium">댓글</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="댓글을 입력하세요"
                   {...field}
-                  className="border rounded px-3 py-2 w-full resize-none"
+                  className="border rounded p-1 w-full resize-none"
                 />
               </FormControl>
               <FormMessage />
@@ -114,7 +113,7 @@ export default function AddCommentForm() {
         />
         <Button
           type="submit"
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-10 sm:w-auto">
+          className="my-auto bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-10 sm:w-auto">
           등록
         </Button>
       </form>
