@@ -33,6 +33,7 @@ export default function AddCommentForm() {
   });
 
   async function onSubmit(values: z.infer<typeof commentFormSchema>) {
+    if (gamemode === undefined || id === undefined) return;
     try {
       // Firestore에 데이터 저장
       await addDoc(collection(db, gamemode, id, 'comments'), {
@@ -49,7 +50,7 @@ export default function AddCommentForm() {
   }
 
   return (
-    <Form {...form} className="text-sm">
+    <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex">
         <div>
           {user && (
