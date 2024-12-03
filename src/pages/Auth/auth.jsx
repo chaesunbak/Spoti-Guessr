@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import LogInForm from '@/components/auth/loginform';
-import SignUpForm from '@/components/auth/signupform';
+import LogInForm from '@/components/auth/Temp1';
+import SignUpForm from '@/components/auth/Temp2';
 
 export default function Auth() {
   return (
