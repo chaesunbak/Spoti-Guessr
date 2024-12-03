@@ -18,6 +18,6 @@
     "allowSyntheticDefaultImports": true, // 추가: default export가 없는 모듈에서도 default import 허용
     "forceConsistentCasingInFileNames": true // 추가: 파일 이름의 대소문자 일관성 강제
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "postcss.config.js", "tailwind.config.js", "vite.config.js", "vite.config.ts"]
 }
