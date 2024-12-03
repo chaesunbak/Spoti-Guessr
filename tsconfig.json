@@ -2,7 +2,7 @@
   "compilerOptions": {
     "strict": true,
     "target": "es5",
-    "module": "commonjs",
+    "module": "esnext",
     "allowJs": true,
     "checkJs": false,
     "baseUrl": "src",
@@ -11,7 +11,12 @@
     "paths": {
       "@/*": ["*"]
     },
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "moduleResolution": "node", // 추가: 모듈 해결 방식 설정
+    "resolveJsonModule": true, // 추가: JSON 모듈 임포트 허용
+    "esModuleInterop": true, // 추가: CommonJS/AMD/UMD 모듈을 ES6 모듈처럼 사용
+    "allowSyntheticDefaultImports": true, // 추가: default export가 없는 모듈에서도 default import 허용
+    "forceConsistentCasingInFileNames": true // 추가: 파일 이름의 대소문자 일관성 강제
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "postcss.config.js", "tailwind.config.js", "vite.config.js", "vite.config.ts"]
