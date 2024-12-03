@@ -1,12 +1,12 @@
 {
-    "compilerOptions": {
-        "strict": true,
-        "target": "es5",
-        "module": "commonjs",
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["./src/*"]
-        },
-        "jsx": "react-jsx",
-    }
+  "compilerOptions": {
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "jsx": "react-jsx"
+  }
 }
