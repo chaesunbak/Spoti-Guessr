@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import LogInForm from '../../components/auth/loginform.tsx';
-import SignUpForm from '../../components/auth/signupform.tsx';
+import LogInForm from '@/components/auth/loginform.tsx';
+import SignUpForm from '@/components/auth/signupform.tsx';
 
 export default function Auth() {
   return (
