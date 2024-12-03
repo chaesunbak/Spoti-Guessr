@@ -9,14 +9,27 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-    extensions: ['.js', '.jsx', '.ts', '.tsx'], // 파일 확장자 해결을 위해 추가
+    extensions: ['.js', '.jsx', '.ts', '.tsx', ''], // 빈 문자열 추가하여 확장자 없는 파일도 처리
   },
   build: {
     rollupOptions: {
-      // 빌드 시 파일 경로 해결을 위한 설정
       input: {
         main: path.resolve(__dirname, 'index.html'),
       },
+    },
+    // 소스맵 생성 활성화
+    sourcemap: true,
+    // 빌드 시 상세 로그 출력
+    minify: 'esbuild',
+    // 청크 크기 경고 임계값 설정
+    chunkSizeWarningLimit: 1000,
+  },
+  // 개발 서버 설정
+  server: {
+    fs: {
+      // 프로젝트 root 외부의 파일 접근 허용
+      strict: false,
+      allow: ['..'],
     },
   },
 });
