@@ -9,7 +9,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-    extensions: ['.js', '.jsx', '.ts', '.tsx'], // 빈 문자열 추가하여 확장자 없는 파일도 처리
+    extensions: ['.js', '.jsx'],
   },
   build: {
     rollupOptions: {
