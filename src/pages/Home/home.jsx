@@ -54,7 +54,6 @@ export default function Home() {
             </a>
             를 통해 제공됩니다.
           </p>
-          <p>무료 서버를 사용하기 때문에 사용량 제한이 있습니다. 사용량이 초과한 경우 다음에 만나요!</p>
         </CardContent>
       </Card>
     </section>
